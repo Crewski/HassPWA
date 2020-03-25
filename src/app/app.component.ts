@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { WebsocketService } from './services/websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'HassPWA';
+  constructor(private ws: WebsocketService){ this.ws.initConnection()}
 }

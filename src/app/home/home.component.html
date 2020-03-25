@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+    <span>{{ settings.getRooms[index]?.name }}</span>
+    <span class="toolbar-spacer"></span>
+    <button mat-icon-button (click)="settings.setEditing()"><span style="width: 100%; height: 100%; color: white;" class="iconify" [attr.data-icon]="icon"></span></button>    
+    <button mat-icon-button [routerLink]="['/settings']"><span style="width: 100%; height: 100%; color: white;" class="iconify" data-icon="mdi:settings"></span></button>    
+    
+</mat-toolbar>
+
+<div *ngIf="settings.isEditing">
+    <button mat-button>New Room</button>
+</div>
+
+<div [style.font-size.vw]="settings.getFont">
+<mat-grid-list [cols]="settings.getCols">
+<mat-grid-tile>
+    <light-tile  style="width: 90%; height: 90%;" entity_id="light.pergola"></light-tile>
+</mat-grid-tile>
+
+<mat-grid-tile>
+    <light-tile  style="width: 90%; height: 90%;" entity_id="light.basement_lights"></light-tile>
+</mat-grid-tile>
+
+<mat-grid-tile>
+    <light-tile  style="width: 90%; height: 90%;" entity_id="light.laundry_room"></light-tile>
+</mat-grid-tile>
+</mat-grid-list>
+</div>
