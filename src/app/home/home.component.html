@@ -1,27 +1,43 @@
 <mat-toolbar color="primary">
     <span>{{ settings.getRooms[index]?.name }}</span>
     <span class="toolbar-spacer"></span>
-    <button mat-icon-button (click)="settings.setEditing()"><span style="width: 100%; height: 100%; color: white;" class="iconify" [attr.data-icon]="icon"></span></button>    
-    <button mat-icon-button [routerLink]="['/settings']"><span style="width: 100%; height: 100%; color: white;" class="iconify" data-icon="mdi:settings"></span></button>    
-    
+    <button mat-icon-button (click)="settings.setEditing()"><span style="width: 100%; height: 100%; color: white;"
+            class="iconify" [attr.data-icon]="icon"></span></button>
+    <button mat-icon-button [routerLink]="['/settings']"><span style="width: 100%; height: 100%; color: white;"
+            class="iconify" data-icon="mdi:settings"></span></button>
+
 </mat-toolbar>
 
 <div *ngIf="settings.isEditing">
     <button mat-button>New Room</button>
+    <button (click)="addEntity()" mat-button>Add Entity</button>
 </div>
 
-<div [style.font-size.vw]="settings.getFont">
-<mat-grid-list [cols]="settings.getCols">
-<mat-grid-tile>
-    <light-tile  style="width: 90%; height: 90%;" entity_id="light.pergola"></light-tile>
-</mat-grid-tile>
+<div [style.font-size.vw]="settings.getFont" style="height: 100%">
+    <mat-tab-group style="height: inherit;" class="header-less-tabs" (selectedTabChange)="changeRoom($event)"
+        [selectedIndex]="index" (swipeleft)="swipe($event.type)" (swiperight)="swipe($event.type)">
+        <mat-tab *ngFor="let room of settings.getRooms; let i = index" [label]="room.name">
+            <mat-grid-list [cols]="settings.getCols">
+                <mat-grid-tile *ngFor="let tile of room.tiles; let j = index">
+                    <section *ngIf="(settings.isEditing)">                        
+                        <span class="delete-button"><button mat-icon-button (click)="deleteEntity(i, j)">
+                            <span style="font-size: 40px;" class="iconify" data-icon="mdi:delete"></span>
+                        </button>
+                    </span>                        
+                        <span *ngIf="(j+1) != room.tiles.length" class="arrow-right"><button mat-icon-button (click)="moveEntity(i, j, 'right')">
+                            <span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-right-bold"></span>
+                        </button>
+                    </span>
+                        <span *ngIf='j != 0' class="arrow-left"><button mat-icon-button (click)="moveEntity(i, j, 'left')">
+                                <span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-left-bold"></span>
+                            </button>
+                        </span>
 
-<mat-grid-tile>
-    <light-tile  style="width: 90%; height: 90%;" entity_id="light.basement_lights"></light-tile>
-</mat-grid-tile>
+                    </section>
+                    <light-tile style="width: 90%; height: 90%;" [entity_id]="tile"></light-tile>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </mat-tab>
+    </mat-tab-group>
 
-<mat-grid-tile>
-    <light-tile  style="width: 90%; height: 90%;" entity_id="light.laundry_room"></light-tile>
-</mat-grid-tile>
-</mat-grid-list>
 </div>

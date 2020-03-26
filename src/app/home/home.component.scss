@@ -1,0 +1,31 @@
+.delete-button {
+    position: absolute;
+    background-color: transparent;
+    top: 5px;
+    right: 5px;
+    color: red;
+    font-size: 25px;
+    z-index: 99999;
+}
+
+.arrow-right {
+    position: absolute;
+    background-color: transparent;
+    bottom: 15px;
+    right: 5px;
+    color: blue;
+    font-size: 25px;
+    z-index: 99999;
+}
+.arrow-left {
+    position: absolute;
+    background-color: transparent;
+    bottom: 15px;
+    left: 5px;
+    color: blue;
+    z-index: 99999;
+}
+
+.header-less-tabs.mat-tab-group .mat-tab-header {
+    display: none;
+  }

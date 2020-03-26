@@ -49,4 +49,8 @@ export class EntityService {
     //   return null
     // }
   }
+
+  getAllEntities(){
+    return this.entities;
+  }
 }

@@ -71,4 +71,36 @@ export class SettingsService {
      this.editing = !this.editing;
      if(!this.editing) this.saveSettings();
    }
+
+   resetRooms(){
+     this.settings.rooms = [
+       {name: '1st Room', tiles: ['light.pergola', 'light.basement_lights']},
+       {name: '2nd Room', tiles: ['light.front_door', 'light.garage_entrance']}];
+     this.saveSettings();
+   }
+
+   addEntity(roomindex: number, entity_id: string){
+     this.settings.rooms[roomindex].tiles.push(entity_id);
+     this.saveSettings();
+   }
+
+   deleteEntity(roomindex, tileindex){
+     this.settings.rooms[roomindex].tiles.splice(tileindex, 1);
+     this.saveSettings();
+   }
+
+   moveEntity(roomindex: number, tileindex: number, direction: string){
+      let newIndex;
+      if(direction == "right"){
+        newIndex = tileindex + 1;
+      } else if (direction == "left"){
+        newIndex = tileindex - 1;
+      } else {
+        return;
+      }
+      let cutOut = this.settings.rooms[roomindex].tiles.splice(tileindex, 1) [0];
+      this.settings.rooms[roomindex].tiles.splice(newIndex, 0, cutOut);       
+      this.saveSettings();
+    
+   }
 }
