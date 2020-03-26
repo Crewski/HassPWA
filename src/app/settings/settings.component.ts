@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../services/settings.service';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -13,22 +14,29 @@ export class SettingsComponent implements OnInit {
   url: string | null;
   cols: number;
   font: number | 100;
+  showTab: boolean;
 
   constructor(
     private settings: SettingsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.url = this.settings.getConnection['url'];
     this.cols = this.settings.getLayout['cols'] || 3;
-    
+    this.showTab = this.settings.getLayout['tabs'];
+    console.log(this.settings.getLayout);
   }
 
   setCols(){
     this.settings.setCols(this.cols);
   }
 
+  setTabs(){
+    console.log("Change tab to " + this.showTab);
+    this.settings.setTabs(this.showTab);
+  }
 
 
   tryConnect(){
@@ -48,6 +56,11 @@ export class SettingsComponent implements OnInit {
         this.settings.resetRooms();
       }
     });
+  }
+
+  editRooms(){
+    this.settings.setEditing(true);
+    this.router.navigate(['/home']);
   }
 
 }

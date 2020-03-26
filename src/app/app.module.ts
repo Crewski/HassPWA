@@ -2,13 +2,12 @@ import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule
 import { NgModule, Injectable } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
+import * as Hammer from 'hammerjs';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-
-import * as Hammer from 'hammerjs';
-
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatButtonModule} from '@angular/material/button';
@@ -17,34 +16,18 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SettingsComponent, SettingsDialog } from './settings/settings.component';
-import { HomeComponent, AddEntityDialog } from './home/home.component';
+import { HomeComponent, AddEntityDialog, EditRoomNameDialog } from './home/home.component';
 import { LightTileComponent } from './tiles/light-tile/light-tile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MyHammerConfig extends HammerGestureConfig {
-  overrides = <any> {
-    'pan': { direction: Hammer.DIRECTION_All },
-    'swipe': { direction: Hammer.DIRECTION_VERTICAL },
-  };
 
-  buildHammer(element: HTMLElement) {
-    const mc = new Hammer(element, {
-      touchAction: 'auto',
-          inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput,
-          recognizers: [
-            [Hammer.Swipe, {
-              direction: Hammer.DIRECTION_HORIZONTAL
-            }]
-          ]
-    });
-    return mc;
-  }
-}
 
 @NgModule({
   declarations: [
@@ -53,7 +36,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     HomeComponent,
     LightTileComponent,
     SettingsDialog,
-    AddEntityDialog
+    AddEntityDialog,
+    EditRoomNameDialog
   ],
   imports: [
     BrowserModule,
@@ -71,9 +55,11 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatInputModule,
     MatDialogModule,
     MatTabsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatCheckboxModule,
+    MatProgressSpinnerModule
   ],
-  providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig}],
+  providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: HammerGestureConfig}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

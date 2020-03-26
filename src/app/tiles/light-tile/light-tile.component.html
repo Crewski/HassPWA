@@ -1,12 +1,14 @@
 
-<div class='tile' (click)="onPress()">
+<div class='tile' (press)="onPress()" (click)="onClick()" (pressUp)="onPressUp()" [ngClass]="active ? 'tile-background-on' : 'tile-background-off' ">
+    <div *ngIf='waitingChange' class="action-spinner"><mat-spinner color='primary'></mat-spinner></div>
+    
     <mat-grid-list cols='4'>
-        <mat-grid-tile rowspan='2'>
-            <span style="width: 100%; height: 100%; margin-left: 5px; color: white;" class="iconify"
-                data-icon="mdi:lightbulb"></span>
+        <mat-grid-tile rowspan='2' [ngClass]="active ? 'tile-icon-on' : null"  [style.color]='iconColor'>
+            <span *ngIf='entity.attributes' style="margin-left: 5px" class="iconify"
+            [attr.data-icon]='entity.attributes.icon' data-height="100%"></span>
         </mat-grid-tile>
         <mat-grid-tile rowspan='2' colspan='3'>
-            <span class="scaling">{{entity?.state}}</span>
+            <span class="scaling">{{entity?.state | titlecase }}</span>
         </mat-grid-tile>
         <mat-grid-tile rowspan='2' colspan='4'>
             <div class="clamped">{{entity?.attributes?.friendly_name}}</div>

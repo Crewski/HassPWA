@@ -1,12 +1,13 @@
 <mat-toolbar color="primary">
     <span>Settings</span>
     <span class="toolbar-spacer"></span>
-    <button mat-icon-button [routerLink]="['/home']"><span style="width: 100%; height: 100%; color: white;"
+    <button mat-button [routerLink]="['/home']"><span style="font-size: 20px;"
             class="iconify" data-icon="mdi:home"></span></button>
 
 </mat-toolbar>
 
 <div class="settings-area">
+    <button style="display: block;" mat-button (click)="editRooms()">Edit Rooms</button>
     <mat-form-field class="example-full-width">
         <mat-label>Home Assistant URL</mat-label>
         <span matPrefix>https://</span>
@@ -19,7 +20,11 @@
         <mat-slider max="12" min="1" step="1" thumbLabel="true" [(ngModel)]="cols" (change)="setCols()">
         </mat-slider>
     </div>
+    <mat-checkbox [(ngModel)]="showTab" (change)="setTabs()" color="primary">Show room headers (hide for mobile)</mat-checkbox>
 </div>
 <div>
     <button mat-button color="warn" (click)="resetRooms()">Reset Rooms</button>
+</div>
+<div>
+    HassPWA version: 1.0.0
 </div>

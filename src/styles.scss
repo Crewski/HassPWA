@@ -28,10 +28,14 @@ $HassPWA-theme: mat-light-theme($HassPWA-primary, $HassPWA-accent, $HassPWA-warn
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body { height: 100%; width: 100%;
+    position: fixed;
+    overflow: hidden;}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-
+.mat-success{
+    color: #00ff00;
+}
 
 .toolbar-spacer {
     flex: 1 1 auto;
@@ -48,16 +52,31 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     height: 100%;
     border-radius: 15px;      
     background: rgb(170, 170, 170);    
-    border: 2px solid #73AD21;
+    border: 2px solid;
+}
+
+.tile-background-on {
+    opacity: 1;
+    background-color: rgb(189, 189, 189);
+    color: #000;
+    border-color: white;
+    // box-shadow: 0px 0px 30px orange;
+  }
+
+  .tile-background-off {
     opacity: .5;
     background-color: rgb(82, 82, 82);
     color: #fff;
     border-color: black
-}
+  }
+
+  .tile-icon-on {
+    color: orange;
+    opacity: 1;
+  }
 
 .scaling {
     font-size: 190%;
-    color: white;
 }
 
 .clamped{
@@ -65,9 +84,28 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;  
     overflow: hidden;
-    color: white;
+    // color: white;
     text-align: center;
     line-height: normal;
     width: 95%;
 }
+
+.action-spinner {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    
+}
+
+input[type='text'],
+input[type='number'],
+input[type='password'],
+input[type='url'],
+input {
+font-size: 16px;
+}
+
+
 

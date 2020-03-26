@@ -59,7 +59,7 @@ export class SettingsService {
    }
 
    get getRooms(): any {
-     if (this.settings.rooms.length == 0 ) this.settings.rooms = [{name: '1st Room'}];
+     if (this.settings.rooms.length == 0 ) this.settings.rooms = [{name: '1st Room', tiles: []}];
      return this.settings.rooms;
    }
 
@@ -67,9 +67,17 @@ export class SettingsService {
      return this.editing;
    }
 
-   setEditing(){
-     this.editing = !this.editing;
-     if(!this.editing) this.saveSettings();
+   get showRoomTabs(): boolean {
+     return this.settings.layout['tabs'];
+   }
+
+   setTabs(showTabs: boolean){
+    this.settings.layout['tabs'] = showTabs;
+    this.saveSettings();
+   }
+
+   setEditing(edit: boolean){
+     this.editing = edit;
    }
 
    resetRooms(){
@@ -100,7 +108,35 @@ export class SettingsService {
       }
       let cutOut = this.settings.rooms[roomindex].tiles.splice(tileindex, 1) [0];
       this.settings.rooms[roomindex].tiles.splice(newIndex, 0, cutOut);       
-      this.saveSettings();
-    
+      this.saveSettings();    
+   }
+
+   addRoom(){
+     this.settings.rooms.push({name: "New Room", tiles: []});
+     this.saveSettings();
+   }
+
+   deleteRoom(roomindex: number){
+     this.settings.rooms.splice(roomindex, 1);
+     this.saveSettings();
+   }
+
+   moveRoom(roomindex: number, direction: string){
+    let newIndex;
+    if(direction == "right"){
+      newIndex = roomindex + 1;
+    } else if (direction == "left"){
+      newIndex = roomindex - 1;
+    } else {
+      return;
+    }
+    let cutOut = this.settings.rooms.splice(roomindex, 1) [0];
+    this.settings.rooms.splice(newIndex, 0, cutOut);       
+    this.saveSettings();   
+   }
+
+   editRoomName(roomindex: number, name: string){
+     this.settings.rooms[roomindex].name = name;
+     this.saveSettings();
    }
 }

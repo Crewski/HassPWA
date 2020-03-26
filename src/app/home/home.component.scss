@@ -29,3 +29,22 @@
 .header-less-tabs.mat-tab-group .mat-tab-header {
     display: none;
   }
+
+.top-bar{
+    position: sticky;
+    position: -webkit-sticky; /* For macOS/iOS Safari */
+    top: 0; /* Sets the sticky toolbar to be on top */
+    z-index: 100;
+    flex: 0 0 auto;
+}
+
+
+
+.app-container {
+    display: flex;
+    flex-direction: column;    
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, ViewChildren, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ViewChildren, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SettingsService } from '../services/settings.service';
 import { HttpService } from '../services/http.service';
@@ -7,7 +7,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { EntityService } from '../services/entity.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +15,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./home.component.scss'],  
   encapsulation: ViewEncapsulation.None
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit {
 
   @ViewChild(MatTabGroup) group;
   @ViewChildren(MatTab) tabs;
@@ -33,21 +33,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog
   ) { }
 
-  number_tabs
-  ngAfterViewInit(){
-    this.tab_num = this.tabs.length - 1;  
-    console.log(this.tab_num)
-  }
+
 
   swipe(eType){
-    console.log(eType);
     if(eType === this.SWIPE_ACTION.RIGHT && this.index > 0){
       this.index--;
     }
-    else if(eType === this.SWIPE_ACTION.LEFT && this.index < this.tab_num){
+    else if(eType === this.SWIPE_ACTION.LEFT && this.index < this.settings.getRooms.length - 1){
       this.index++;
     }
-    console.log(this.index)
   }
 
   ngOnInit(): void {
@@ -57,10 +51,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       } 
     });
 
-  }
-
-  get icon(){
-    return this.settings.isEditing ? 'mdi:save' : 'mdi:edit';
   }
 
   changeRoom(event: MatTabChangeEvent){
@@ -78,7 +68,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   addEntity(){
     const dialogRef = this.dialog.open(AddEntityDialog, {
-      width: '100vw',
+      width: '90vw',
+      height: '90vh'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -88,10 +79,36 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
+  addRoom(){
+    this.settings.addRoom();
+    this.index = this.settings.getRooms.length - 1;
+  }
+
+  moveRoom(direction: string){
+    this.settings.moveRoom(this.index, direction);
+  }
+
+  deleteRoom(){
+    this.settings.deleteRoom(this.index);
+    if (this.index > this.settings.getRooms.length - 1) this.index--
+  }
+
+  editRoomName(){
+      const dialogRef = this.dialog.open(EditRoomNameDialog, {
+        width: '250px',
+        data: this.settings.getRooms[this.index].name,
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) this.settings.editRoomName(this.index, result);
+      });
+    }
+  
+
 }
 
 @Component({
-  selector: 'app-settings',
+  
   template: `
   <h1 mat-dialog-title>Add Entity</h1>
     <div mat-dialog-content>
@@ -103,7 +120,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
            [formControl]="myControl"
            [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="entitySelected()">
-      <mat-option *ngFor="let entity of filteredEntities | async" [value]="entity.entity_id">
+      <mat-option *ngFor="let entity of filteredEntities | async" [value]="entity.entity_id">        
         {{entity.entity_id}}
       </mat-option>
     </mat-autocomplete>
@@ -135,4 +152,26 @@ export class AddEntityDialog implements OnInit {
   entitySelected(){
     this.dialogRef.close(this.myControl.value);
   }
+}
+
+@Component({
+  template: `
+  <h1 mat-dialog-title>Edit Room Name</h1>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Room Name</mat-label>
+      <input matInput [(ngModel)]="data">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="null">Cancel</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Set Name</button>
+  </div>
+  `,
+})
+export class EditRoomNameDialog { 
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: string){console.log(this.data)}
+
+
 }
