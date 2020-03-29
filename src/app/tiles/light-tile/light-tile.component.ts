@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { EntityService } from 'src/app/services/entity.service';
 import { WebsocketService } from 'src/app/services/websocket.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'light-tile',
-  templateUrl: './light-tile.component.html',
-  styleUrls: ['./light-tile.component.scss']
+  templateUrl: '../generic-tile.html',
 })
 export class LightTileComponent implements OnInit {
 
@@ -14,13 +14,13 @@ export class LightTileComponent implements OnInit {
   active: boolean = false;
   iconColor: string = 'rgb(255,0,0)';
 
-  pressEvent = false;
+ 
   waitingChange: boolean = false;
 
   constructor(
     private entityService: EntityService,
     private websocketService: WebsocketService,    
-    private cd: ChangeDetectorRef,
+    // private cd: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -44,42 +44,46 @@ export class LightTileComponent implements OnInit {
     }
     this.setActive();
     this.waitingChange = false;
-    this.cd.detectChanges();
+    // this.cd.detectChanges();
   }
 
   setActive() {  
-    console.log(this.entity.state);
     if ((this.entity.state).toLowerCase() == 'on') {
       this.active = true;
       if (this.entity.attributes['rgb_color']) {
         this.iconColor = 'rgb(' + this.entity.attributes['rgb_color'].join(', ') + ')';
       } else {
-        this.iconColor = 'rgb(255,165,0)';
+        this.iconColor = this.entityService.standardOnColor;
       }
     } else {
       this.active = false;
-      this.iconColor = 'rgb(0,0,0)';
+      this.iconColor = this.entityService.standardOffColor;
     }
-    console.log(this.iconColor);
   }
 
-  onPress(){
-    this.pressEvent = true;
-    // this.websocketService.callService("light", "toggle", this.entity_id)
-  }
-
-  onClick(){
-    if (this.pressEvent){
-      console.log("Long press event")
-    } else {
-      this.waitingChange = true;
-      this.websocketService.callService("light", "toggle", this.entity_id)
-    }
-    this.pressEvent = false;
+  onTap(){    
+    this.waitingChange = true;
+    this.websocketService.callService("light", "toggle", this.entity_id)
   }
 
   onPressUp(){
-    // console.log("press up");
+    console.log("press up");
+  }
+
+  get getState(): string{
+    if (this.entity && this.entity.attributes && (this.entity.attributes.brightness || this.entity.attributes.white_value)){
+      let value = this.entity.attributes.brightness > this.entity.attributes.white_value ? this.entity.attributes.brightness : this.entity.attributes.white_value;
+      return this.entityService.changeToPercent(value) + '%';
+    }
+    return this.entity.state
+  }
+
+  get getFriendlyName(): string{
+    if (this.entity && this.entity.attributes && this.entity.attributes.friendly_name) {
+      return this.entity.attributes.friendly_name;
+    } else {
+      return this.entity_id.split('.')[1];
+    }
   }
 
 }

@@ -12,8 +12,8 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$HassPWA-primary: mat-palette($mat-indigo);
-$HassPWA-accent: mat-palette($mat-pink, A200, A100, A400);
+$HassPWA-primary: mat-palette($mat-deep-orange, 500);
+$HassPWA-accent: mat-palette($mat-indigo, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $HassPWA-warn: mat-palette($mat-red);
@@ -88,6 +88,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-align: center;
     line-height: normal;
     width: 95%;
+    white-space: pre-wrap !important;
 }
 
 .action-spinner {
@@ -106,6 +107,32 @@ input[type='url'],
 input {
 font-size: 16px;
 }
+
+.camera-img {    
+
+  vertical-align: middle;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+
+.camera-name {
+  
+position: absolute;
+left: 50%;
+transform: translate(-50%, -50%);
+margin: 0 auto;
+  border-radius: .75em;
+  bottom: 0px;
+  height: 1.5em;
+  // text-align: center;
+  display: flex;
+  align-items: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.678);
+  padding: 0 10px;
+}  
 
 
 

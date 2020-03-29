@@ -26,4 +26,6 @@ export class HttpService {
       this.ws.initConnection(res['access_token']);
     })
   }
+
+  
 }

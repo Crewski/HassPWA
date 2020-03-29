@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { EntityService } from '../services/entity.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -30,10 +31,13 @@ export class HomeComponent implements OnInit {
     private route: ActivatedRoute,
     public settings: SettingsService,
     private http: HttpService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackbar: MatSnackBar
   ) { }
 
-
+  onPress(){
+    console.log("Press");
+  }
 
   swipe(eType){
     if(eType === this.SWIPE_ACTION.RIGHT && this.index > 0){
@@ -41,6 +45,16 @@ export class HomeComponent implements OnInit {
     }
     else if(eType === this.SWIPE_ACTION.LEFT && this.index < this.settings.getRooms.length - 1){
       this.index++;
+    }
+  }
+
+  getColSpan(entity_id: string){
+    let domain = entity_id.split('.')[0];
+    switch (domain){
+      case "camera":
+        return this.settings.getCols > 2 ? 3 : this.settings.getCols;
+      default:
+        return 1;
     }
   }
 
@@ -55,7 +69,6 @@ export class HomeComponent implements OnInit {
 
   changeRoom(event: MatTabChangeEvent){
     this.index = event.index;
-    console.log(event);
   }
 
   moveEntity(roomindex: number, tileindex: number, direction: string){

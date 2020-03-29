@@ -8,7 +8,7 @@ export class EntityService {
 
   entities: any[] = [];
 
-  private entity_subject = new BehaviorSubject<any>(null);
+  private entity_subject = new BehaviorSubject<any>(this.entities);
   public entity_change = this.entity_subject.asObservable();
 
 
@@ -16,6 +16,7 @@ export class EntityService {
 
   setEntities(entities){
     this.entities = entities;
+    this.entity_subject.next(entities);
   }
 
   updateEntity(entity){
@@ -43,14 +44,22 @@ export class EntityService {
         }, 500)
       }
     })
-    //   return this.entities.find(entity => entity.entity_id == entity_id);      
-    // } catch (err) {
-    //   console.log(err);
-    //   return null
-    // }
+
   }
 
   getAllEntities(){
     return this.entities;
+  }
+
+  changeToPercent(value): number {
+    return Math.round((value - 0) * (100 - 0) / (255 - 0) + 0);
+  }
+
+  get standardOnColor(){
+    return 'rgb(255,255,255)';
+  }
+
+  get standardOffColor(){
+    return 'rgb(0,0,0)';
   }
 }

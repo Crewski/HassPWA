@@ -43,7 +43,7 @@ export class SettingsComponent implements OnInit {
     this.settings.setUrl(this.url);
 
     let ha_url = 'https://' + this.url + '/auth/authorize?client_id=' + environment.app_url + '&redirect_uri=' + environment.app_url + '/home';
-    window.open(ha_url,  "_blank");
+    window.open(ha_url,  "_self");
   }
 
   resetRooms(){

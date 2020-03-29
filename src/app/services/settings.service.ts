@@ -23,7 +23,7 @@ export class SettingsService {
    }
 
    setUrl(url){
-     this.settings.connection['url'] = url;
+     this.settings.connection = {url: url, token: null};
      this.saveSettings();
    }
 
