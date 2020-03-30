@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { EntityService } from 'src/app/services/entity.service';
 import { WebsocketService } from 'src/app/services/websocket.service';
 import { MatBottomSheet, MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'general-tile',
@@ -20,23 +21,28 @@ export class GeneralTileComponent implements OnInit {
   constructor(
     private entityService: EntityService,
     private websocketService: WebsocketService,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    public settings: SettingsService
   ) { }
 
   ngOnInit(): void {
     this.domain = this.entity_id.split('.')[0];
-    this.setupEntity();
+
+    this.entityService.entity_change.subscribe(data => {      
+      try {
+        this.entity = data.find(x => x.entity_id == this.entity_id);
+        
+        if (this.entity) this.processEntity();
+      } catch (err) {
+        console.log(err);
+      }
+    })  
+    // this.setupEntity();
   }
 
   async setupEntity() {
     this.entity = await this.entityService.getEntity(this.entity_id);
     this.processEntity();
-    this.entityService.entity_change.subscribe(data => {
-      if (data && data.entity_id == this.entity_id) {
-        this.entity = data;
-        this.processEntity();
-      }
-    })
   }
 
   processEntity() {
@@ -97,7 +103,7 @@ export class GeneralTileComponent implements OnInit {
     });
     bottomSheetRef.afterDismissed().subscribe((option) => {
       if(option){
-        this.websocketService.callServiceWithOption('input_select', 'select_option', this.entity_id, option )
+        this.websocketService.callService('input_select', 'select_option', this.entity_id, option )
       } else {
         this.waitingChange = false;
       }
@@ -109,6 +115,7 @@ export class GeneralTileComponent implements OnInit {
   }
 
   get getState(): string {
+    if (!this.entity) return null;
     if (this.entity.state == 'unavailable') return '?';
     return this.entity.state
   }
@@ -127,7 +134,7 @@ export class GeneralTileComponent implements OnInit {
   selector: 'input-select',
   template: `
   <mat-nav-list>
-  <mat-list-item *ngFor="let option of data.options[0]" (click)="return(option)">
+  <mat-list-item *ngFor="let option of data.options[0]" (tap)="return(option)">
   {{option}}
   </mat-list-item>
 </mat-nav-list>
@@ -135,7 +142,7 @@ export class GeneralTileComponent implements OnInit {
 })
 export class InputSelectBottomSheet {
   constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any, 
-  private bottomsheet: MatBottomSheetRef<InputSelectBottomSheet>) {console.log(data) }
+  private bottomsheet: MatBottomSheetRef<InputSelectBottomSheet>) {}
 
   return(option){
     this.bottomsheet.dismiss(option);

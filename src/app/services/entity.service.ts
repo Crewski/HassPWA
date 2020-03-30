@@ -8,7 +8,7 @@ export class EntityService {
 
   entities: any[] = [];
 
-  private entity_subject = new BehaviorSubject<any>(this.entities);
+  private entity_subject = new BehaviorSubject<any[]>(this.entities);
   public entity_change = this.entity_subject.asObservable();
 
 
@@ -19,13 +19,13 @@ export class EntityService {
     this.entity_subject.next(entities);
   }
 
-  updateEntity(entity){
-    this.entity_subject.next(entity);
-    try {
-      let index = this.entities.findIndex(entity => entity.entity_id == entity.entity_id);
-      if (entity) {
-        this.entities[index] = entity;
+  updateEntity(message){    
+    try {      
+      let index = this.entities.findIndex(entity => entity.entity_id == message.entity_id);
+      if (message) {
+        this.entities[index] = message;
       }
+      this.entity_subject.next(this.entities);
     } catch (err) {
       console.log(err);
     }

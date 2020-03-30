@@ -1,7 +1,7 @@
-<button *ngIf="!active" mat-stroked-button style="width: 100%; height: 100%;" (pressUp)="onPressUp()"  (tap)="onTap()">
+<button *ngIf="!active" mat-stroked-button style="width: 100%; height: 100%;" (press)="onPressUp()"  (tap)="onTap()">
 <ng-template [ngTemplateOutlet]="tile"></ng-template>
 </button>
-<button *ngIf="active" mat-flat-button color="primary" style="width: 100%; height: 100%;" (pressUp)="onPressUp()"  (tap)="onTap()">
+<button *ngIf="active" mat-flat-button color="primary" style="width: 100%; height: 100%;" (press)="onPressUp()"  (tap)="onTap()">
 <ng-template [ngTemplateOutlet]="tile"></ng-template>
 </button>
 
@@ -9,14 +9,14 @@
     <div *ngIf='waitingChange' class="action-spinner"><mat-spinner color='primary'></mat-spinner></div>    
     <mat-grid-list cols='4'>
         <mat-grid-tile rowspan='2' [ngClass]="active ? 'tile-icon-on' : null"  [style.color]='iconColor'>
-            <span *ngIf='entity.attributes' style="margin-left: 5px" class="iconify"
-            [attr.data-icon]='entity.attributes.icon' data-height="100%"></span>
+            <span *ngIf='entity?.attributes' style="margin-left: 5px" class="iconify"
+            [attr.data-icon]='entity?.attributes?.icon' data-height="100%"></span>
         </mat-grid-tile>
         <mat-grid-tile rowspan='2' colspan='3'>
-            <span class="scaling">{{ getState | titlecase }}</span>
+            <span [style.font-size.vw]="settings.getStateFont">{{ getState | titlecase }}</span>
         </mat-grid-tile>
         <mat-grid-tile rowspan='2' colspan='4'>
-            <div class="clamped">{{ getFriendlyName | spacedText | titlecase }}</div>
+            <div class="clamped" [style.font-size.vw]="settings.getNameFont">{{ getFriendlyName | spacedText | titlecase }}</div>
         </mat-grid-tile>
     </mat-grid-list>
 </ng-template>

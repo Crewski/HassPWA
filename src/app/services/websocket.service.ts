@@ -11,7 +11,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class WebsocketService {
 
   haWebSocket: WebSocketSubject<any>;
-  // private isConnected: BehaviorSubject<boolean>;
   private messageID: number = 1;
   private isConnected = new BehaviorSubject<boolean>(false);
   private connectedTimer;
@@ -28,17 +27,11 @@ export class WebsocketService {
   initConnection(token?: string) {
     this.isConnected.next(false);
     if (!this.settings.getConnection['token'] && !token) {
-      // window.alert("Connection hasn't been setup");
       return;
     }
     let mainsub = this.isConnected.subscribe(connected => {
 
       if (!connected) {
-
-        // if (this.haWebSocket) {
-        //   this.haWebSocket.complete();
-        //   this.haWebSocket = null;
-        // }
         this.haWebSocket = new WebSocketSubject('wss://' + this.settings.getConnection['url'] + '/api/websocket');
 
         this.haWebSocket.subscribe(message => {
@@ -54,7 +47,6 @@ export class WebsocketService {
               break;
             case "auth_invalid":
               console.log(message);
-              // this.settings.setToken(null);
               break;
             default:
               this.message_subject.next(message);
@@ -65,10 +57,6 @@ export class WebsocketService {
             console.log("Trying connection");
             this.isConnected.next(false);
           }, 2000);
-          // this.haWebSocket.next(null);
-          //   setTimeout(() => this.initConnection(), 2000);
-          // }, () => {
-          //   console.log('It is complete');
         })
 
       }
@@ -140,8 +128,6 @@ export class WebsocketService {
 
   pingPong(): Promise<any> {
     return new Promise((resolve, reject) => {
-      // console.log("PingPong connected : ", this.isConnected);
-      // if (!this.isConnected) reject(false);
       setTimeout(() => {
         reject();
       }, 1000);
@@ -188,20 +174,7 @@ export class WebsocketService {
     })
   }
 
-  callServiceWithOption(domain: string, service: string, entity_id: string, option: string) {
-    let id = this.messageID;
-    this.messageID++;
-    let msg = { id: id, type: 'call_service', domain: domain, service: service, service_data: { entity_id: entity_id, option: option } };
-    this.haWebSocket.next(msg);
-    return new Promise((resolve) => {
-      let sub = this.message_change.subscribe(data => {
-        if (data.id == id) {
-          sub.unsubscribe();
-          resolve(data);
-        }
-      })
-    })
-  }
+
 
   getThumbnail(entity_id: string): Promise<any> {
     return new Promise((resolve) => {

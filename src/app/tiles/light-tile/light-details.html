@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{ data.name }}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-slider max="12" min="1" step="1" thumbLabel="true" [(ngModel)]="brightness" (change)="setCols()">
+    </mat-slider>
+    <mat-label>Room Name</mat-label>
+    <input matInput [(ngModel)]="data">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="null">Cancel</button>
+  <button mat-button [mat-dialog-close]="null" cdkFocusInitial>Set Name</button>
+</div>

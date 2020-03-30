@@ -27,5 +27,21 @@ export class HttpService {
     })
   }
 
+  getHistory(entity_id: string) {
+    let params = new HttpParams().set("filter_entity_id", entity_id);
+    
+    let url = 'https://' + this.settings.getConnection['url'];
+    
+    url = url + '/api/history/period';
+    let token = this.settings.getConnection['token'];
+    let bearertoken = 'Bearer ' + token;
+    // console.log(bearertoken);
+    let headers = new HttpHeaders({
+      // 'content-type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    })
+    return this.http.get(url, { headers: headers, params: params })
+  }
+
   
 }

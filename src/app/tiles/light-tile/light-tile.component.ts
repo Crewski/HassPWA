@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { EntityService } from 'src/app/services/entity.service';
 import { WebsocketService } from 'src/app/services/websocket.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { HttpService } from 'src/app/services/http.service';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'light-tile',
@@ -19,24 +20,33 @@ export class LightTileComponent implements OnInit {
 
   constructor(
     private entityService: EntityService,
-    private websocketService: WebsocketService,    
+    private websocketService: WebsocketService, 
+    private httpService: HttpService, 
+    public settings: SettingsService  
     // private cd: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
-    this.setupEntity();
+    this.entityService.entity_change.subscribe(data => {      
+      try {
+        this.entity = data.find(x => x.entity_id == this.entity_id);        
+        if (this.entity) this.processEntity();
+      } catch (err) {
+        console.log(err);
+      }
+    })  
   }
 
-  async setupEntity(){
-    this.entity = await this.entityService.getEntity(this.entity_id);
-    this.processEntity();
-    this.entityService.entity_change.subscribe(data => {      
-      if(data && data.entity_id == this.entity_id) {
-        this.entity = data;
-        this.processEntity();
-      }
-    })
-  }
+  // async setupEntity(){
+  //   this.entity = await this.entityService.getEntity(this.entity_id);
+  //   this.processEntity();
+  //   this.entityService.entity_change.subscribe(data => {      
+  //     if(data && data.entity_id == this.entity_id) {
+  //       this.entity = data;
+  //       this.processEntity();
+  //     }
+  //   })
+  // }
 
   processEntity(){
     if (!this.entity.attributes['icon']) {
@@ -68,14 +78,19 @@ export class LightTileComponent implements OnInit {
 
   onPressUp(){
     console.log("press up");
+    this.httpService.getHistory(this.entity_id).subscribe(data => {
+      window.alert("It worked")
+    }, err => window.alert("Cors Error"))
   }
 
   get getState(): string{
     if (this.entity && this.entity.attributes && (this.entity.attributes.brightness || this.entity.attributes.white_value)){
+      if (!this.entity.attributes.brightness) return this.entityService.changeToPercent(this.entity.attributes.white_value) + '%'
+      if (!this.entity.attributes.white_value) return this.entityService.changeToPercent(this.entity.attributes.brightness) + '%'
       let value = this.entity.attributes.brightness > this.entity.attributes.white_value ? this.entity.attributes.brightness : this.entity.attributes.white_value;
       return this.entityService.changeToPercent(value) + '%';
     }
-    return this.entity.state
+    return (this.entity && this.entity['state']) ? this.entity.state : null;
   }
 
   get getFriendlyName(): string{

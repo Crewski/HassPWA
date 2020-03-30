@@ -51,8 +51,16 @@ export class SettingsService {
    }
 
    get getFont(): number {
-     return 14 / (this.settings.layout['cols'] || 3);
+     return 10 / (this.settings.layout['cols'] || 3);
    }
+
+   get getNameFont(): number {
+    return 10 / (this.settings.layout['cols'] || 3);
+  }
+
+  get getStateFont(): number {
+    return this.getNameFont * 1.9;
+  }
 
    get getCols(): number {
      return this.settings.layout['cols'] || 3;
