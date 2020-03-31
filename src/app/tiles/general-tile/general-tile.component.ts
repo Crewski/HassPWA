@@ -103,7 +103,7 @@ export class GeneralTileComponent implements OnInit {
     });
     bottomSheetRef.afterDismissed().subscribe((option) => {
       if(option){
-        this.websocketService.callService('input_select', 'select_option', this.entity_id, option )
+        this.websocketService.callService('input_select', 'select_option', this.entity_id, [{key: 'option', value: option}] )
       } else {
         this.waitingChange = false;
       }

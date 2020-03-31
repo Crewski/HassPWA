@@ -43,12 +43,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
   .settings-area{
       margin: 10px;
+      display: flex;
+      flex-direction: column;
+      max-width: 600px;
   }
 
-  .tile-icon-on {
-    // color: orange;
-    opacity: 1;
-  }
+
 
 
 
@@ -70,8 +70,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 1;
-    
+    opacity: 1;    
+}
+
+.full-width-dialog .mat-dialog-container {
+  width: 100vw !important;
+  max-width: 400px !important;
+  // height: 95vh !important;
 }
 
 input[type='text'],
@@ -79,11 +84,10 @@ input[type='number'],
 input[type='password'],
 input[type='url'],
 input {
-font-size: 16px;
+  font-size: 16px;
 }
 
 .camera-img {    
-
   vertical-align: middle;
   object-fit: contain;
   width: 100%;
@@ -91,12 +95,11 @@ font-size: 16px;
 }
 
 
-.camera-name {
-  
-position: absolute;
-left: 50%;
-transform: translate(-50%, -50%);
-margin: 0 auto;
+.camera-name {  
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
   border-radius: .75em;
   bottom: 0px;
   height: 1.5em;
@@ -107,6 +110,15 @@ margin: 0 auto;
   background-color: rgba(0, 0, 0, 0.678);
   padding: 0 10px;
 }  
+
+video {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.detail-toggle {
+  width: 100%;
+}
 
 
 

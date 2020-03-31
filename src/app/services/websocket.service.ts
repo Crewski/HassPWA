@@ -5,6 +5,11 @@ import { SettingsService } from './settings.service';
 import { EntityService } from './entity.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+export class KeyValuePair {
+  key: string;
+  value: any;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -69,10 +74,10 @@ export class WebsocketService {
 
   async setupEntities() {
     if (this.connectedTimer) clearTimeout(this.connectedTimer);
-    this.connectedTimer = setTimeout(() => {      
-    this.snackBar.open("Connection Established", null, {
-      duration: 2000
-    })
+    this.connectedTimer = setTimeout(() => {
+      this.snackBar.open("Connection Established", null, {
+        duration: 2000
+      })
     }, 1000);
     this.isConnected.next(true);
     this.heartbeat();
@@ -156,13 +161,31 @@ export class WebsocketService {
     })
   }
 
-  callService(domain: string, service: string, entity_id: string, option?: string) {
+  callService(domain: string, service: string, entity_id: string, options?: KeyValuePair[]) {
     // window.navigator.vibrate(150);
     let id = this.messageID;
     this.messageID++;
     let service_data = { entity_id: entity_id };
-    if (option) service_data['option'] = option;
+    // if (option) service_data['option'] = option;
+    if (options) options.forEach(option => service_data[option.key] = option.value);
     let msg = { id: id, type: 'call_service', domain: domain, service: service, service_data: service_data };
+    console.log(msg);
+    this.haWebSocket.next(msg);
+    return new Promise((resolve) => {
+      let sub = this.message_change.subscribe(data => {
+        if (data.id == id) {
+          sub.unsubscribe();
+          resolve(data);
+        }
+      })
+    })
+  }
+
+  callServiceRaw(msg){
+    let id = this.messageID;
+    this.messageID++;
+    msg['id'] = id;
+    msg['type'] = 'call_service';
     this.haWebSocket.next(msg);
     return new Promise((resolve) => {
       let sub = this.message_change.subscribe(data => {
@@ -189,6 +212,28 @@ export class WebsocketService {
               sub.unsubscribe();
               con_sub.unsubscribe();
               resolve(data);
+            }
+          })
+        }
+      })
+    })
+  }
+
+
+
+  getCameraStream(entity_id: string): Promise<any> {
+    return new Promise((resolve) => {
+      let con_sub = this.isConnected.subscribe(connected => {
+        if (connected) {
+          let id = this.messageID;
+          this.messageID++;
+          let msg = { id: id, type: "camera/stream", entity_id: entity_id };
+          this.haWebSocket.next(msg);
+          let sub = this.message_change.subscribe(data => {
+            if (data.id == id) {
+              sub.unsubscribe();
+              con_sub.unsubscribe();
+              resolve(data.result.url);
             }
           })
         }

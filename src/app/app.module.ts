@@ -24,11 +24,15 @@ import {MatListModule} from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SettingsComponent, SettingsDialog } from './settings/settings.component';
 import { HomeComponent, AddEntityDialog, EditRoomNameDialog } from './home/home.component';
-import { LightTileComponent } from './tiles/light-tile/light-tile.component';
+import { LightTileComponent, LightDetailDialog } from './tiles/light-tile/light-tile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GeneralTileComponent, InputSelectBottomSheet } from './tiles/general-tile/general-tile.component';
 import { SpacedTextPipe } from './pipes/spaced-text.pipe';
-import { CameraTileComponent } from './tiles/camera-tile/camera-tile.component';
+import { CameraTileComponent, CameraStreamDialog } from './tiles/camera-tile/camera-tile.component';
+
+
+import {VgCoreModule, VgControlsModule, VgOverlayPlayModule, VgBufferingModule, VgStreamingModule} from '@hitrecord/videogular2';
+import { ClimateTileComponent } from './tiles/climate-tile/climate-tile.component';
 
 
 @Injectable({
@@ -39,6 +43,9 @@ export class MyHammerConfig extends HammerGestureConfig {
       // pan: {
       //     direction: 6
       // },
+      swipe: {
+        direction: Hammer.DIRECTION_ALL
+      },
       pinch: {
           enable: false
       },
@@ -61,7 +68,10 @@ export class MyHammerConfig extends HammerGestureConfig {
     GeneralTileComponent,
     SpacedTextPipe,
     CameraTileComponent,
-    InputSelectBottomSheet
+    InputSelectBottomSheet,
+    CameraStreamDialog,
+    ClimateTileComponent,
+    LightDetailDialog
   ],
   imports: [
     BrowserModule,
@@ -84,7 +94,12 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatBottomSheetModule,
-    MatListModule
+    MatListModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
+    VgStreamingModule
   ],
   entryComponents: [
     InputSelectBottomSheet

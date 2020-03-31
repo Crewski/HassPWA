@@ -1,7 +1,11 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Inject } from '@angular/core';
 import { WebsocketService } from 'src/app/services/websocket.service';
 import { EntityService } from 'src/app/services/entity.service';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { SettingsService } from 'src/app/services/settings.service';
+import { VgAPI } from '@hitrecord/videogular2';
+import { element } from 'protractor';
 
 @Component({
   selector: 'camera-tile',
@@ -18,7 +22,9 @@ export class CameraTileComponent implements OnInit, OnDestroy {
   constructor(
     private ws: WebsocketService,
     private entityService: EntityService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private dialog: MatDialog,
+    private settings: SettingsService
   ) { }
 
   ngOnInit(): void {
@@ -41,8 +47,14 @@ export class CameraTileComponent implements OnInit, OnDestroy {
     }, 10000)
   }
 
-  getStream(){
+  async getStream(){
+    let url = 'https://' + this.settings.getConnection['url'];
 
+    url = url + await this.ws.getCameraStream(this.entity_id);
+    const dialogRef = this.dialog.open(CameraStreamDialog, {
+      // panelClass: 'full-width-dialog',
+      data: url,
+    });
   }
 
   ngOnDestroy(){
@@ -60,3 +72,56 @@ export class CameraTileComponent implements OnInit, OnDestroy {
   }
 
 }
+
+@Component({
+  selector: 'app-settings',
+  template: `
+  <div  style="max-height: 100%" (swipedown)="close()">
+  <vg-player (onPlayerReady)="onPlayerReady($event)">
+  <video #media
+  [vgMedia]="media"
+  [vgHls]="data"
+  id="video"
+  controls
+  >
+</video>
+</vg-player>
+</div>
+  `,
+})
+export class CameraStreamDialog {
+
+ 
+  api: VgAPI;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  private dialogRef: MatDialogRef<CameraStreamDialog>){
+    console.log(this.data)
+  }
+
+  close(){
+    this.dialogRef.close();
+  }
+
+  onPlayerReady(api: VgAPI) {
+    try{
+    console.log(api);
+    this.api = api;
+    api.play();
+    
+    window.alert(api.fsAPI.nativeFullscreen);
+    // console.log(api.fsAPI.nativeFullscreen);
+    // api.fsAPI.request(document.getElementsByName('media'));
+      if (this.api.fsAPI.isAvailable && !this.api.fsAPI.isFullscreen) {
+        
+        // this.api.fsAPI.toggleFullscreen();
+      }
+    } catch (err) {
+    }
+    
+
+  }
+
+}
+
+

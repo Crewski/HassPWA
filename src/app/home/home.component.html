@@ -15,7 +15,7 @@
     <button (click)="addRoom()" mat-button color="success"><span style="font-size: 40px;" class="iconify" data-icon="mdi:add"></span></button>
     <button [style.visibility]="settings.getRooms.length != 1 ? 'visible' : 'hidden'" (click)="deleteRoom()" mat-button color="warn"><span style="font-size: 40px;" class="iconify" data-icon="mdi:delete"></span></button>
     <button [style.visibility]="index != settings.getRooms.length - 1 ? 'visible' : 'hidden'" (click)="moveRoom('right')" mat-button><span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-right-bold"></span></button>
-    <button (click)="addEntity()" mat-button>Add Entity</button>
+    <button (click)="addEntity()" mat-stroked-button color="accent">Add Entity</button>
 </div>
 
 <div [style.font-size.vw]="settings.getFont" style="flex: 1 1; display: flex; flex-direction: column;" >
@@ -30,7 +30,7 @@
                         </button>
                     </span>                        
                         <span *ngIf="(j+1) != room.tiles.length" class="arrow-right"><button mat-icon-button (click)="moveEntity(i, j, 'right')">
-                            <span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-right-bold"></span>
+                            <span style="font-size: 40px; color: blue" class="iconify" data-icon="mdi:arrow-right-bold"></span>
                         </button>
                     </span>
                         <span *ngIf='j != 0' class="arrow-left"><button mat-icon-button (click)="moveEntity(i, j, 'left')">
@@ -42,6 +42,7 @@
                     <section [ngSwitch]="tile.split('.')[0]" style="width: 90%; height: 90%;" >
                     <light-tile *ngSwitchCase="'light'" [entity_id]="tile"></light-tile>
                     <camera-tile *ngSwitchCase="'camera'" [entity_id]="tile"></camera-tile>
+                    <climate-tile *ngSwitchCase="'climate'" [entity_id]="tile"></climate-tile>
                     <general-tile *ngSwitchDefault [entity_id]="tile"></general-tile>
                 </section>
                 </mat-grid-tile>

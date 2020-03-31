@@ -1,14 +1,14 @@
 <mat-toolbar color="primary">
     <span>Settings</span>
     <span class="toolbar-spacer"></span>
-    <button mat-button [routerLink]="['/home']"><span style="font-size: 20px;"
-            class="iconify" data-icon="mdi:home"></span></button>
+    <button mat-button [routerLink]="['/home']"><span style="font-size: 20px;" class="iconify"
+            data-icon="mdi:home"></span></button>
 
 </mat-toolbar>
 
 <div class="settings-area">
-    <button style="display: block;" mat-button (click)="editRooms()">Edit Rooms</button>
-    <mat-form-field class="example-full-width">
+    <button style="margin: 30px" mat-flat-button color="accent" (click)="editRooms()">Edit Rooms</button>
+    <mat-form-field class="width: 100%">
         <mat-label>Home Assistant URL</mat-label>
         <span matPrefix>https://</span>
         <input type="url" [(ngModel)]='url' matInput placeholder="ha.duckdns.org:8123">
@@ -16,15 +16,18 @@
     </mat-form-field>
     <button mat-button (click)="tryConnect()" color="primary">Connect</button>
     <div class="settings-item">
-        Columns:
-        <mat-slider max="12" min="1" step="1" thumbLabel="true" [(ngModel)]="cols" (change)="setCols()">
+        <div style="flex: 0 0">Columns:</div>
+        <mat-slider style="flex: 1 1" max="12" min="1" step="1" thumbLabel="true" [(ngModel)]="cols"
+            (change)="setCols()">
         </mat-slider>
     </div>
-    <mat-checkbox [(ngModel)]="showTab" (change)="setTabs()" color="primary">Show room headers (hide for mobile)</mat-checkbox>
-</div>
-<div>
-    <button mat-button color="warn" (click)="resetRooms()">Reset Rooms</button>
-</div>
-<div>
-    HassPWA version: 1.0.1
+    <mat-checkbox [(ngModel)]="showTab" (change)="setTabs()" color="primary">Show room headers (hide for mobile)
+    </mat-checkbox>
+
+    <div>
+        <button mat-button color="warn" (click)="resetRooms()">Reset Rooms</button>
+    </div>
+    <div>
+        HassPWA version: 1.0.1
+    </div>
 </div>
