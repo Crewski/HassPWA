@@ -1,15 +1,22 @@
 <div style="width: 100%; height: 100%;" (swipedown)="close()">
-<h1 mat-dialog-title>{{ getFriendlyName }}</h1>
-<div >
-  <button class="detail-toggle" mat-flat-button color='primary' *ngIf="isOn" (tap)="toggleLight()">Turn Off</button>
-  <button class="detail-toggle" mat-stroked-button color='primary' *ngIf="!isOn" (tap)="toggleLight()">Turn On</button>
-  <div *ngIf="entity.attributes.brightness">
-    <span>Brightness: </span><mat-slider max="100" min="0" step="1" thumbLabel="true" [(ngModel)]="adjustedBrightness" (change)="updateEntity()">
-    </mat-slider>
-  </div> 
-   <div *ngIf="entity.attributes.white_value != null">
-    <span>White Value: </span><mat-slider max="100" min="0" step="1" thumbLabel="true" [(ngModel)]="adjustedWhiteValue" (change)="updateEntity()">
-    </mat-slider>
+  <h1 mat-dialog-title>{{ getFriendlyName }}</h1>
+  <div>
+    <button class="detail-toggle" mat-flat-button color='primary' *ngIf="isOn" (tap)="toggleLight()">Turn Off</button>
+    <button class="detail-toggle" mat-stroked-button color='primary' *ngIf="!isOn" (tap)="toggleLight()">Turn On</button>
+    <div *ngIf="entity.attributes.brightness">
+      <span>Brightness: </span>
+      <mat-slider max="100" min="0" step="1" thumbLabel="true" [(ngModel)]="adjustedBrightness"
+        (change)="updateEntity()">
+      </mat-slider>      
+    </div>
+    <div style="margin: 0 auto"><div  id="pickerColor"></div></div>
+    <div *ngIf="entity.attributes.white_value != null">
+      <span>White Value: </span>
+      <mat-slider max="100" min="0" step="1" thumbLabel="true" [(ngModel)]="adjustedWhiteValue"
+        (change)="updateEntity()">
+      </mat-slider>
+      
+    </div>
+  <div  id="pickerTemp"></div>
   </div>
-</div>
 </div>

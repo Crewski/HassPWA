@@ -1,21 +1,21 @@
 <div class='app-container' >
 <mat-toolbar color="accent" class='top-bar'>
-    <button mat-button *ngIf="settings.isEditing" (click)="editRoomName()"><span style="font-size: 20px"
+    <button mat-button *ngIf="settings.isEditing" (tap)="editRoomName()"><span style="font-size: 20px"
         class="iconify" data-icon="mdi:edit"></span></button>
     <span>{{ settings.getRooms[index]?.name }}</span>
     <span class="toolbar-spacer"></span>
-    <button mat-button *ngIf="settings.isEditing" (click)="settings.setEditing(false)"><span style="font-size: 20px"
+    <button mat-button *ngIf="settings.isEditing" (tap)="settings.setEditing(false)"><span style="font-size: 20px"
             class="iconify" data-icon="mdi:content-save"></span></button>
     <button mat-button [routerLink]="['/settings']" style="align-content: center;"><span style="font-size: 20px;" class="iconify" data-icon="mdi:cog-outline"></span></button>
 
 </mat-toolbar>
 
 <div *ngIf="settings.isEditing">
-    <button  [style.visibility]="index != 0 ? 'visible' : 'hidden'" (click)="moveRoom('left')" mat-button><span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-left-bold"></span></button>
-    <button (click)="addRoom()" mat-button color="success"><span style="font-size: 40px;" class="iconify" data-icon="mdi:add"></span></button>
-    <button [style.visibility]="settings.getRooms.length != 1 ? 'visible' : 'hidden'" (click)="deleteRoom()" mat-button color="warn"><span style="font-size: 40px;" class="iconify" data-icon="mdi:delete"></span></button>
-    <button [style.visibility]="index != settings.getRooms.length - 1 ? 'visible' : 'hidden'" (click)="moveRoom('right')" mat-button><span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-right-bold"></span></button>
-    <button (click)="addEntity()" mat-stroked-button color="accent">Add Entity</button>
+    <button  [style.visibility]="index != 0 ? 'visible' : 'hidden'" (tap)="moveRoom('left')" mat-button><span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-left-bold"></span></button>
+    <button (tap)="addRoom()" mat-button color="success"><span style="font-size: 40px;" class="iconify" data-icon="mdi:add"></span></button>
+    <button [style.visibility]="settings.getRooms.length != 1 ? 'visible' : 'hidden'" (tap)="deleteRoom()" mat-button color="warn"><span style="font-size: 40px;" class="iconify" data-icon="mdi:delete"></span></button>
+    <button [style.visibility]="index != settings.getRooms.length - 1 ? 'visible' : 'hidden'" (tap)="moveRoom('right')" mat-button><span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-right-bold"></span></button>
+    <button (tap)="addEntity()" mat-stroked-button color="accent">Add Entity</button>
 </div>
 
 <div [style.font-size.vw]="settings.getFont" style="flex: 1 1; display: flex; flex-direction: column;" >
@@ -25,15 +25,15 @@
             <mat-grid-list [cols]="settings.getCols" (swipeleft)="swipe($event.type)" (swiperight)="swipe($event.type)">
                 <mat-grid-tile *ngFor="let tile of room.tiles; let j = index" [colspan]="getColSpan(tile)" [rowspan]="tile.split('.')[0] == 'camera' ? 2 : 1">
                     <section *ngIf="(settings.isEditing)">                        
-                        <span class="delete-button"><button mat-icon-button (click)="deleteEntity(i, j)">
+                        <span class="delete-button"><button mat-icon-button (tap)="deleteEntity(i, j)">
                             <span style="font-size: 40px;" class="iconify" data-icon="mdi:delete"></span>
                         </button>
                     </span>                        
-                        <span *ngIf="(j+1) != room.tiles.length" class="arrow-right"><button mat-icon-button (click)="moveEntity(i, j, 'right')">
+                        <span *ngIf="(j+1) != room.tiles.length" class="arrow-right"><button mat-icon-button (tap)="moveEntity(i, j, 'right')">
                             <span style="font-size: 40px; color: blue" class="iconify" data-icon="mdi:arrow-right-bold"></span>
                         </button>
                     </span>
-                        <span *ngIf='j != 0' class="arrow-left"><button mat-icon-button (click)="moveEntity(i, j, 'left')">
+                        <span *ngIf='j != 0' class="arrow-left"><button mat-icon-button (tap)="moveEntity(i, j, 'left')">
                                 <span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-left-bold"></span>
                             </button>
                         </span>

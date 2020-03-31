@@ -7,14 +7,14 @@
 </mat-toolbar>
 
 <div class="settings-area">
-    <button style="margin: 30px" mat-flat-button color="accent" (click)="editRooms()">Edit Rooms</button>
+    <button style="margin: 30px" mat-flat-button color="accent" (tap)="editRooms()">Edit Rooms</button>
     <mat-form-field class="width: 100%">
         <mat-label>Home Assistant URL</mat-label>
         <span matPrefix>https://</span>
         <input type="url" [(ngModel)]='url' matInput placeholder="ha.duckdns.org:8123">
         <mat-hint align="start"><strong>Must be ssl and external</strong> </mat-hint>
     </mat-form-field>
-    <button mat-button (click)="tryConnect()" color="primary">Connect</button>
+    <button mat-button (tap)="tryConnect()" color="primary">Connect</button>
     <div class="settings-item">
         <div style="flex: 0 0">Columns:</div>
         <mat-slider style="flex: 1 1" max="12" min="1" step="1" thumbLabel="true" [(ngModel)]="cols"
@@ -25,7 +25,7 @@
     </mat-checkbox>
 
     <div>
-        <button mat-button color="warn" (click)="resetRooms()">Reset Rooms</button>
+        <button mat-button color="warn" (tap)="resetRooms()">Reset Rooms</button>
     </div>
     <div>
         HassPWA version: 1.0.1
