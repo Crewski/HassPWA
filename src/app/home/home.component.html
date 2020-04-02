@@ -43,6 +43,7 @@
                     <light-tile *ngSwitchCase="'light'" [entity_id]="tile"></light-tile>
                     <camera-tile *ngSwitchCase="'camera'" [entity_id]="tile"></camera-tile>
                     <climate-tile *ngSwitchCase="'climate'" [entity_id]="tile"></climate-tile>
+                    <sensor-tile *ngSwitchCase="'sensor'" [entity_id]="tile"></sensor-tile>
                     <general-tile *ngSwitchDefault [entity_id]="tile"></general-tile>
                 </section>
                 </mat-grid-tile>

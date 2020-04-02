@@ -135,7 +135,7 @@ export class WebsocketService {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         reject();
-      }, 1000);
+      }, 2000);
       let id = this.messageID;
       this.messageID++;
       let msg = { id: id, type: 'ping' };
@@ -180,24 +180,6 @@ export class WebsocketService {
       })
     })
   }
-
-  callServiceRaw(msg){
-    let id = this.messageID;
-    this.messageID++;
-    msg['id'] = id;
-    msg['type'] = 'call_service';
-    this.haWebSocket.next(msg);
-    return new Promise((resolve) => {
-      let sub = this.message_change.subscribe(data => {
-        if (data.id == id) {
-          sub.unsubscribe();
-          resolve(data);
-        }
-      })
-    })
-  }
-
-
 
   getThumbnail(entity_id: string): Promise<any> {
     return new Promise((resolve) => {

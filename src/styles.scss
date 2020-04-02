@@ -76,6 +76,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .full-width-dialog .mat-dialog-container {
   width: 100vw !important;
   max-width: 400px !important;
+  border-top: 20px solid mat-color($HassPWA-primary);
   // height: 95vh !important;
 }
 
@@ -118,6 +119,44 @@ video {
 
 .detail-toggle {
   width: 100%;
+}
+
+.top-border  .mat-dialog-container {
+  border-top: 10px solid orange;
+}
+
+.dialog-setting {
+  font-size: 125%;
+}
+
+.mat-slider.mat-slider-horizontal .mat-slider-wrapper {
+  top: 18px;
+}
+.mat-slider.mat-slider-horizontal .mat-slider-track-wrapper {
+  height: 12px;
+  border-radius: 10px
+}
+.mat-slider.mat-slider-horizontal .mat-slider-track-background,
+.mat-slider.mat-slider-horizontal .mat-slider-track-fill {
+  height: 100%;
+}
+.mat-slider.mat-slider-horizontal .mat-slider-track-fill {
+  background-color: mat-color($HassPWA-accent);
+}
+.mat-accent .mat-slider-thumb {
+  height: 30px;
+  width: 30px;
+  background-color: white;
+  border: solid 2px gray;
+  bottom: -20px;
+  right: -20px;
+}
+.mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
+  background-color: white;
+}
+
+.icon-tile > ::ng-deep figure {
+  justify-content: flex-start !important;
 }
 
 

@@ -26,13 +26,15 @@ import { SettingsComponent, SettingsDialog } from './settings/settings.component
 import { HomeComponent, AddEntityDialog, EditRoomNameDialog } from './home/home.component';
 import { LightTileComponent, LightDetailDialog } from './tiles/light-tile/light-tile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GeneralTileComponent, InputSelectBottomSheet } from './tiles/general-tile/general-tile.component';
+import { GeneralTileComponent, } from './tiles/general-tile/general-tile.component';
 import { SpacedTextPipe } from './pipes/spaced-text.pipe';
 import { CameraTileComponent, CameraStreamDialog } from './tiles/camera-tile/camera-tile.component';
 
 
 import {VgCoreModule, VgControlsModule, VgOverlayPlayModule, VgBufferingModule, VgStreamingModule} from '@hitrecord/videogular2';
-import { ClimateTileComponent } from './tiles/climate-tile/climate-tile.component';
+import { ClimateTileComponent, ClimateDetailDialog } from './tiles/climate-tile/climate-tile.component';
+import { ListBottomSheet } from './modals/listbottomsheet';
+import { SensorTileComponent } from './tiles/sensor-tile/sensor-tile.component';
 
 
 @Injectable({
@@ -43,9 +45,9 @@ export class MyHammerConfig extends HammerGestureConfig {
       // pan: {
       //     direction: 6
       // },
-      swipe: {
-        direction: Hammer.DIRECTION_ALL
-      },
+      // swipe: {
+      //   direction: Hammer.DIRECTION_ALL
+      // },
       pinch: {
           enable: false
       },
@@ -68,10 +70,12 @@ export class MyHammerConfig extends HammerGestureConfig {
     GeneralTileComponent,
     SpacedTextPipe,
     CameraTileComponent,
-    InputSelectBottomSheet,
+    ListBottomSheet,
     CameraStreamDialog,
     ClimateTileComponent,
-    LightDetailDialog
+    LightDetailDialog,
+    ClimateDetailDialog,
+    SensorTileComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +106,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     VgStreamingModule
   ],
   entryComponents: [
-    InputSelectBottomSheet
+    ListBottomSheet
   ],
   providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig},
   { provide: MAT_TABS_CONFIG, useValue: { animationDuration: '150ms'}}],

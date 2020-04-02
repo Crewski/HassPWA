@@ -1,0 +1,15 @@
+.running {
+    animation: blinker 1.5s linear infinite;
+    animation-play-state: running;
+}
+
+.stopped {
+    animation-play-state: paused;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+

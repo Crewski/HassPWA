@@ -173,7 +173,7 @@ export class AddEntityDialog implements OnInit {
   <div mat-dialog-content>
     <mat-form-field>
       <mat-label>Room Name</mat-label>
-      <input matInput [(ngModel)]="data">
+      <input text="input" matInput [(ngModel)]="data">
     </mat-form-field>
   </div>
   <div mat-dialog-actions>

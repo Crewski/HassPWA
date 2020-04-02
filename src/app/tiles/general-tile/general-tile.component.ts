@@ -3,6 +3,7 @@ import { EntityService } from 'src/app/services/entity.service';
 import { WebsocketService } from 'src/app/services/websocket.service';
 import { MatBottomSheet, MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { SettingsService } from 'src/app/services/settings.service';
+import { ListBottomSheet } from 'src/app/modals/listbottomsheet';
 
 @Component({
   selector: 'general-tile',
@@ -50,7 +51,7 @@ export class GeneralTileComponent implements OnInit {
     switch (this.domain) {
       case "script":
         icon = "mdi:script-text";
-        this.entity.state = null;
+        this.entity.state = 'Script';
         this.active = true;        
         this.iconColor = this.entityService.standardOnColor;
         break;
@@ -98,8 +99,8 @@ export class GeneralTileComponent implements OnInit {
   }
 
   callBottomSheet(){
-    const bottomSheetRef = this.bottomSheet.open(InputSelectBottomSheet, {
-      data: { options: [this.entity.attributes.options] },
+    const bottomSheetRef = this.bottomSheet.open(ListBottomSheet, {
+      data: { options: this.entity.attributes.options },
     });
     bottomSheetRef.afterDismissed().subscribe((option) => {
       if(option){
@@ -130,21 +131,4 @@ export class GeneralTileComponent implements OnInit {
 
 }
 
-@Component({
-  selector: 'input-select',
-  template: `
-  <mat-nav-list>
-  <mat-list-item *ngFor="let option of data.options[0]" (tap)="return(option)">
-  {{option}}
-  </mat-list-item>
-</mat-nav-list>
-  `,
-})
-export class InputSelectBottomSheet {
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any, 
-  private bottomsheet: MatBottomSheetRef<InputSelectBottomSheet>) {}
 
-  return(option){
-    this.bottomsheet.dismiss(option);
-  }
-}

@@ -96,7 +96,6 @@ export class CameraStreamDialog {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
   private dialogRef: MatDialogRef<CameraStreamDialog>){
-    console.log(this.data)
   }
 
   close(){
@@ -108,10 +107,6 @@ export class CameraStreamDialog {
     console.log(api);
     this.api = api;
     api.play();
-    
-    window.alert(api.fsAPI.nativeFullscreen);
-    // console.log(api.fsAPI.nativeFullscreen);
-    // api.fsAPI.request(document.getElementsByName('media'));
       if (this.api.fsAPI.isAvailable && !this.api.fsAPI.isFullscreen) {
         
         // this.api.fsAPI.toggleFullscreen();

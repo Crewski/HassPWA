@@ -6,6 +6,8 @@ import { SettingsService } from 'src/app/services/settings.service';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import iro from '@jaames/iro';
 import { Subscription } from 'rxjs';
+import * as Hammer from 'hammerjs';
+import { HammerGestureConfig } from '@angular/platform-browser';
 
 @Component({
   selector: 'light-tile',
@@ -120,9 +122,16 @@ export class LightDetailDialog implements OnInit, OnDestroy {
     private websocketService: WebsocketService,
     private dialogRef: MatDialogRef<LightDetailDialog>,
   ) {
+
   }
 
   ngOnInit() {  
+    let hammertime = new Hammer(document.getElementById('dialog-cont'));
+    hammertime.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+    hammertime.on('swipe', ev => {
+      console.log(ev);
+      if(ev.deltaY > 0) this.dialogRef.close();
+    });
     this.sub = this.entityService.entity_change.subscribe(data => {
       try {
         this.entity = data.find(x => x.entity_id == this.entity_id);
@@ -260,7 +269,10 @@ export class LightDetailDialog implements OnInit, OnDestroy {
         
       });
     }
-    this.tempPicker.color.kelvin = 1000000 / this.entity.attributes['color_temp'];
+    let clippedmired = this.entity.attributes['color_temp'];
+    if (clippedmired < this.entity.attributes['min_mireds']) clippedmired = this.entity.attributes['min-mireds'];
+    if (clippedmired > this.entity.attributes['max_mireds']) clippedmired = this.entity.attributes['max-mireds'];
+    this.tempPicker.color.kelvin = 1000000 / clippedmired;
   }
 
 

@@ -7,15 +7,15 @@
 
 <ng-template #tile>
     <div *ngIf='waitingChange' class="action-spinner"><mat-spinner color='primary'></mat-spinner></div>    
-    <mat-grid-list cols='4'>
-        <mat-grid-tile rowspan='2' [style.color]='iconColor'>
-            <span *ngIf='entity?.attributes' style="margin-left: 5px" class="iconify"
+    <mat-grid-list cols='1' rowHeight="5:1">
+        <mat-grid-tile [style.color]='iconColor'>
+            <span  *ngIf='entity?.attributes' class="iconify"
             [attr.data-icon]='entity?.attributes?.icon' data-height="100%"></span>
         </mat-grid-tile>
-        <mat-grid-tile rowspan='2' colspan='3'>
+        <mat-grid-tile rowspan='2'>
             <span [style.font-size.vw]="settings.getStateFont">{{ getState | titlecase }}</span>
         </mat-grid-tile>
-        <mat-grid-tile rowspan='2' colspan='4'>
+        <mat-grid-tile rowspan='2'>
             <div class="clamped" [style.font-size.vw]="settings.getNameFont">{{ getFriendlyName | spacedText | titlecase }}</div>
         </mat-grid-tile>
     </mat-grid-list>
