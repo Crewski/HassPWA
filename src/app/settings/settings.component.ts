@@ -3,6 +3,7 @@ import { SettingsService } from '../services/settings.service';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { PasscodeDialog } from '../modals/passcode-dialog';
 
 @Component({
   selector: 'app-settings',
@@ -29,24 +30,24 @@ export class SettingsComponent implements OnInit {
     console.log(this.settings.getLayout);
   }
 
-  setCols(){
+  setCols() {
     this.settings.setCols(this.cols);
   }
 
-  setTabs(){
+  setTabs() {
     console.log("Change tab to " + this.showTab);
     this.settings.setTabs(this.showTab);
   }
 
 
-  tryConnect(){
+  tryConnect() {
     this.settings.setUrl(this.url);
 
     let ha_url = 'https://' + this.url + '/auth/authorize?client_id=' + environment.app_url + '&redirect_uri=' + environment.app_url + '/home';
-    window.open(ha_url,  "_blank");
+    window.open(ha_url, "_blank");
   }
 
-  resetRooms(){
+  resetRooms() {
     const dialogRef = this.dialog.open(SettingsDialog, {
       width: '250px',
     });
@@ -58,9 +59,38 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  editRooms(){
+  editRooms() {
     this.settings.setEditing(true);
     this.router.navigate(['/home']);
+  }
+
+  setPasscode() {
+    if (this.settings.getLayout['passcode']) {
+
+      const dialogRef = this.dialog.open(PasscodeDialog, {
+        data: 'Old Passcode'
+      });
+      dialogRef.afterClosed().subscribe(code => {
+        if (code != this.settings.getLayout['passcode']) {
+          window.alert("Wrong code");
+          return;
+        }
+        const dialogRefNew = this.dialog.open(PasscodeDialog, {
+          data: 'New Passocde'
+        })
+        dialogRefNew.afterClosed().subscribe(newcode => {
+          if (newcode) this.settings.setPasscode(newcode);
+        })
+      })
+    } else {
+      
+      const dialogRefNew = this.dialog.open(PasscodeDialog, {
+        data: 'New Passocde'
+      })
+      dialogRefNew.afterClosed().subscribe(newcode => {
+        if (newcode) this.settings.setPasscode(newcode);
+      })
+    }
   }
 
 }

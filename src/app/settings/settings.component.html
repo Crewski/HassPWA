@@ -21,8 +21,11 @@
             (change)="setCols()">
         </mat-slider>
     </div>
-    <mat-checkbox [(ngModel)]="showTab" (change)="setTabs()" color="primary">Show room headers (hide for mobile)
+    <mat-checkbox [(ngModel)]="showTab" (change)="setTabs()" color="primary">Show room headers
     </mat-checkbox>
+    <div>
+        <button mat-button color="accent" (tap)="setPasscode()">Set Passcode</button>
+    </div>
 
     <div>
         <button mat-button color="warn" (tap)="resetRooms()">Reset Rooms</button>
