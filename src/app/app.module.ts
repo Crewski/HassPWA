@@ -29,9 +29,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GeneralTileComponent, } from './tiles/general-tile/general-tile.component';
 import { SpacedTextPipe } from './pipes/spaced-text.pipe';
 import { CameraTileComponent, CameraStreamDialog } from './tiles/camera-tile/camera-tile.component';
-
-
-import {VgCoreModule, VgControlsModule, VgOverlayPlayModule, VgBufferingModule, VgStreamingModule} from '@hitrecord/videogular2';
 import { ClimateTileComponent, ClimateDetailDialog } from './tiles/climate-tile/climate-tile.component';
 import { ListBottomSheet } from './modals/listbottomsheet';
 import { PasscodeDialog } from './modals/passcode-dialog';

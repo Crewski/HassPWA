@@ -6,7 +6,6 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 import { SettingsService } from 'src/app/services/settings.service';
 import * as Hls from 'hls.js';
 import * as Hammer from 'hammerjs';
-import { Platform } from '@angular/cdk/platform';
 
 @Component({
   selector: 'camera-tile',
@@ -26,7 +25,6 @@ export class CameraTileComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private dialog: MatDialog,
     private settings: SettingsService,
-    private platform: Platform
   ) { }
 
   ngOnInit(): void {

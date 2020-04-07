@@ -46,7 +46,7 @@ export class DeviceTrackerTileComponent implements OnInit {
       this.active = true;
       this.iconColor = this.entityService.standardOnColor;
     }
-    if (!this.entity || !this.entity.attributes || !this.entity.attributes.device_class || this.entity.attributes.icon) return;
+    if (!this.entity || !this.entity.attributes ||  this.entity.attributes.icon) return;
     this.entity.attributes['icon'] = "mdi:account";
   }
 
@@ -63,7 +63,8 @@ export class DeviceTrackerTileComponent implements OnInit {
 
   get getState(): string {
     if (!this.entity) return null;
-    if (this.entity.state == 'unavailable') return '?';
+    if (this.entity.state.toLowerCase() == 'unavailable') return '?';
+    if (this.entity.state.toLowerCase() == 'not_home') return 'Away';
     return this.entity.state;
   }
 

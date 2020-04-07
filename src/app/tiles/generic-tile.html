@@ -13,7 +13,7 @@
             [attr.data-icon]='entity?.attributes?.icon' data-height="100%"></span>
         </mat-grid-tile>
         <mat-grid-tile rowspan='2'>
-            <span [style.font-size.vw]="settings.getStateFont">{{ getState | titlecase }}</span>
+            <span [style.font-size.vw]="settings.getStateFont">{{ getState | spacedText | titlecase }}</span>
         </mat-grid-tile>
         <mat-grid-tile rowspan='2'>
             <div class="clamped" [style.font-size.vw]="settings.getNameFont">{{ getFriendlyName | spacedText | titlecase }}</div>
