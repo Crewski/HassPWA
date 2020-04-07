@@ -68,7 +68,8 @@ export class SettingsComponent implements OnInit {
     if (this.settings.getLayout['passcode']) {
 
       const dialogRef = this.dialog.open(PasscodeDialog, {
-        data: 'Old Passcode'
+        data: 'Old Passcode',
+        panelClass: 'full-width-dialog',
       });
       dialogRef.afterClosed().subscribe(code => {
         if (code != this.settings.getLayout['passcode']) {
@@ -76,14 +77,15 @@ export class SettingsComponent implements OnInit {
           return;
         }
         const dialogRefNew = this.dialog.open(PasscodeDialog, {
-          data: 'New Passocde'
+          data: 'New Passocde',
+          panelClass: 'full-width-dialog',
         })
         dialogRefNew.afterClosed().subscribe(newcode => {
           if (newcode) this.settings.setPasscode(newcode);
         })
       })
     } else {
-      
+
       const dialogRefNew = this.dialog.open(PasscodeDialog, {
         data: 'New Passocde'
       })

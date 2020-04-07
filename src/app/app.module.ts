@@ -84,11 +84,11 @@ export class MyHammerConfig extends HammerGestureConfig {
     ClimateDetailDialog,
     SensorTileComponent,
     PasscodeDialog,
-    CoverTileComponent
+    CoverTileComponent,
     ChartModal,
     StackedChartModal,
     BinarySensorTileComponent,
-    DeviceTrackerTileComponent
+    DeviceTrackerTileComponent,
 
   ],
   imports: [
@@ -123,7 +123,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     ListBottomSheet,
     PasscodeDialog,
     ChartModal,
-    StackedChartModal
+    StackedChartModal,
 
   ],
   providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig},

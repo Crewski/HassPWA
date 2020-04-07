@@ -74,7 +74,9 @@ export class CoverTileComponent implements OnInit {
       this.websocketService.callService('cover', 'toggle', this.entity_id);
       return;
     }
-    let dialogRef = this.dialog.open(PasscodeDialog);
+    let dialogRef = this.dialog.open(PasscodeDialog, {      
+      panelClass: 'full-width-dialog',
+    });
     dialogRef.afterClosed().subscribe(code => {
       if (code == this.settings.getLayout['passcode']){
         this.websocketService.callService('cover', 'toggle', this.entity_id);
