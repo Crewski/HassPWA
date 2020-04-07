@@ -113,11 +113,11 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatSnackBarModule,
     MatBottomSheetModule,
     MatListModule,
-    VgCoreModule,
-    VgControlsModule,
-    VgOverlayPlayModule,
-    VgBufferingModule,
-    VgStreamingModule
+    // VgCoreModule,
+    // VgControlsModule,
+    // VgOverlayPlayModule,
+    // VgBufferingModule,
+    // VgStreamingModule
   ],
   entryComponents: [
     ListBottomSheet,
