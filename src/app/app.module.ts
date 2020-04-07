@@ -34,7 +34,9 @@ import { CameraTileComponent, CameraStreamDialog } from './tiles/camera-tile/cam
 import {VgCoreModule, VgControlsModule, VgOverlayPlayModule, VgBufferingModule, VgStreamingModule} from '@hitrecord/videogular2';
 import { ClimateTileComponent, ClimateDetailDialog } from './tiles/climate-tile/climate-tile.component';
 import { ListBottomSheet } from './modals/listbottomsheet';
+import { PasscodeDialog } from './modals/passcode-dialog';
 import { SensorTileComponent } from './tiles/sensor-tile/sensor-tile.component';
+import { CoverTileComponent } from './tiles/cover-tile/cover-tile.component';
 
 
 @Injectable({
@@ -75,7 +77,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     ClimateTileComponent,
     LightDetailDialog,
     ClimateDetailDialog,
-    SensorTileComponent
+    SensorTileComponent,
+    PasscodeDialog,
+    CoverTileComponent
   ],
   imports: [
     BrowserModule,
@@ -106,7 +110,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     VgStreamingModule
   ],
   entryComponents: [
-    ListBottomSheet
+    ListBottomSheet,
+    PasscodeDialog
   ],
   providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig},
   { provide: MAT_TABS_CONFIG, useValue: { animationDuration: '150ms'}}],

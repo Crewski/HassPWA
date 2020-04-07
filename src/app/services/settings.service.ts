@@ -27,10 +27,10 @@ export class SettingsService {
      this.saveSettings();
    }
 
-   setFont(font){
-     this.settings.layout['font'] = font;
-     this.saveSettings();
-   }
+  //  setFont(font){
+  //    this.settings.layout['font'] = font;
+  //    this.saveSettings();
+  //  }
 
    setCols(cols){
      this.settings.layout['cols'] = cols;
@@ -39,6 +39,11 @@ export class SettingsService {
 
    setToken(token){
      this.settings.connection['token'] = token;
+     this.saveSettings();
+   }
+
+   setPasscode(code){
+     this.settings.layout['passcode'] = code;
      this.saveSettings();
    }
 
