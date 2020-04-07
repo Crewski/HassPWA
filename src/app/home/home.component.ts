@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit {
   addEntity(){
     const dialogRef = this.dialog.open(AddEntityDialog, {
       width: '90vw',
-      height: '90vh'
+      // height: '90vh'
     });
 
     dialogRef.afterClosed().subscribe(result => {

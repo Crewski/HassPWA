@@ -45,7 +45,9 @@
                     <climate-tile *ngSwitchCase="'climate'" [entity_id]="tile"></climate-tile>
                     <sensor-tile *ngSwitchCase="'sensor'" [entity_id]="tile"></sensor-tile>
                     <cover-tile *ngSwitchCase="'cover'" [entity_id]="tile"></cover-tile>
-                    
+                    <binary-sensor-tile *ngSwitchCase="'binary_sensor'" [entity_id]="tile"></binary-sensor-tile>
+                    <device-tracker-tile *ngSwitchCase="'person'" [entity_id]="tile"></device-tracker-tile>
+                    <device-tracker-tile *ngSwitchCase="'device_tracker'" [entity_id]="tile"></device-tracker-tile>
                     <general-tile *ngSwitchDefault [entity_id]="tile"></general-tile>
                 </section>
                 </mat-grid-tile>
