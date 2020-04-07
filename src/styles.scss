@@ -80,6 +80,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   // height: 95vh !important;
 }
 
+.graph-dialog .mat-dialog-container {
+  width: 90vw !important;
+  height: 90vh !important;
+  border-top: 20px solid mat-color($HassPWA-primary);
+  // height: 95vh !important;
+}
+
 input[type='text'],
 input[type='number'],
 input[type='password'],
