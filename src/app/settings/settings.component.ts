@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { PasscodeDialog } from '../modals/passcode-dialog';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ListBottomSheet } from '../modals/listbottomsheet';
 
 @Component({
   selector: 'app-settings',
@@ -20,7 +22,8 @@ export class SettingsComponent implements OnInit {
   constructor(
     private settings: SettingsService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private bottomSheet: MatBottomSheet
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +40,22 @@ export class SettingsComponent implements OnInit {
   setTabs() {
     console.log("Change tab to " + this.showTab);
     this.settings.setTabs(this.showTab);
+  }
+
+  get getEffect(){
+    return this.settings.getLayout['effect'] || 'slide';
+  }
+
+  setEffect(){
+    const options = ["slide", "fade", "cube", "coverflow", "flip"]
+    const bottomSheetRef = this.bottomSheet.open(ListBottomSheet, {
+      data: { options: options },
+    });
+    bottomSheetRef.afterDismissed().subscribe((option) => {
+      if(option){
+        this.settings.setSwiperEffect(option);
+      }
+    });
   }
 
 

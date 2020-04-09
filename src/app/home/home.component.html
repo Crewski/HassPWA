@@ -1,8 +1,9 @@
-<div class='app-container' >
+<swiper [(index)]="index" [config]="config">
+<div class='app-container' *ngFor="let room of settings.getRooms; let i = index">
 <mat-toolbar color="accent" class='top-bar'>
-    <button mat-button *ngIf="settings.isEditing" (tap)="editRoomName()"><span style="font-size: 20px"
+    <button mat-button *ngIf="settings.isEditing" (tap)="editRoomName(i)"><span style="font-size: 20px"
         class="iconify" data-icon="mdi:edit"></span></button>
-    <span>{{ settings.getRooms[index]?.name }}</span>
+    <span>{{ room.name }}</span>
     <span class="toolbar-spacer"></span>
     <button mat-button *ngIf="settings.isEditing" (tap)="settings.setEditing(false)"><span style="font-size: 20px"
             class="iconify" data-icon="mdi:content-save"></span></button>
@@ -11,18 +12,15 @@
 </mat-toolbar>
 
 <div *ngIf="settings.isEditing">
-    <button  [style.visibility]="index != 0 ? 'visible' : 'hidden'" (tap)="moveRoom('left')" mat-button><span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-left-bold"></span></button>
+    <button  [style.visibility]="index != 0 ? 'visible' : 'hidden'" (tap)="moveRoom('left', i)" mat-button><span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-left-bold"></span></button>
     <button (tap)="addRoom()" mat-button color="success"><span style="font-size: 40px;" class="iconify" data-icon="mdi:add"></span></button>
-    <button [style.visibility]="settings.getRooms.length != 1 ? 'visible' : 'hidden'" (tap)="deleteRoom()" mat-button color="warn"><span style="font-size: 40px;" class="iconify" data-icon="mdi:delete"></span></button>
-    <button [style.visibility]="index != settings.getRooms.length - 1 ? 'visible' : 'hidden'" (tap)="moveRoom('right')" mat-button><span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-right-bold"></span></button>
-    <button (tap)="addEntity()" mat-stroked-button color="accent">Add Entity</button>
+    <button [style.visibility]="settings.getRooms.length != 1 ? 'visible' : 'hidden'" (tap)="deleteRoom(i)" mat-button color="warn"><span style="font-size: 40px;" class="iconify" data-icon="mdi:delete"></span></button>
+    <button [style.visibility]="index != settings.getRooms.length - 1 ? 'visible' : 'hidden'" (tap)="moveRoom('right', i)" mat-button><span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-right-bold"></span></button>
+    <button (tap)="addEntity(i)" mat-stroked-button color="accent">Add Entity</button>
 </div>
 
 <div [style.font-size.vw]="settings.getFont" style="flex: 1 1; display: flex; flex-direction: column;" >
-    <mat-tab-group [ngClass]="{'header-less-tabs': !settings.showRoomTabs}" (selectedTabChange)="changeRoom($event)" 
-        [selectedIndex]="index">
-        <mat-tab *ngFor="let room of settings.getRooms; let i = index" [label]="room.name">
-            <mat-grid-list [cols]="settings.getCols" (swipeleft)="swipe($event.type)" (swiperight)="swipe($event.type)">
+            <mat-grid-list [cols]="settings.getCols">
                 <mat-grid-tile *ngFor="let tile of room.tiles; let j = index" [colspan]="getColSpan(tile)" [rowspan]="tile.split('.')[0] == 'camera' ? 2 : 1">
                     <section *ngIf="(settings.isEditing)">                        
                         <span class="delete-button"><button mat-icon-button (tap)="deleteEntity(i, j)">
@@ -53,11 +51,8 @@
                 </mat-grid-tile>
             </mat-grid-list>
            
-        </mat-tab>
-        
-        
-    </mat-tab-group>
-     <div style="flex: 1 0; " (swipeleft)="swipe($event.type)" (swiperight)="swipe($event.type)"></div>
+     <!-- <div style="flex: 1 0; " (swipeleft)="swipe($event.type)" (swiperight)="swipe($event.type)"></div> -->
 
    </div>
 </div>
+</swiper>

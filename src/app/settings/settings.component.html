@@ -21,8 +21,9 @@
             (change)="setCols()">
         </mat-slider>
     </div>
-    <mat-checkbox [(ngModel)]="showTab" (change)="setTabs()" color="primary">Show room headers
-    </mat-checkbox>
+    <div>
+        Slide Effect  <button mat-stroked-button color="accent" (tap)="setEffect()">{{ getEffect | titlecase }}</button>
+    </div>
     <div>
         <button mat-button color="accent" (tap)="setPasscode()">Set Passcode</button>
     </div>

@@ -152,4 +152,9 @@ export class SettingsService {
      this.settings.rooms[roomindex].name = name;
      this.saveSettings();
    }
+
+   setSwiperEffect(effect: string){
+     this.settings.layout['effect'] = effect;
+     this.saveSettings();
+   }
 }

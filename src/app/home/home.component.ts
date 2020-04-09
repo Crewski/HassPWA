@@ -9,6 +9,7 @@ import {map, startWith} from 'rxjs/operators';
 import { EntityService } from '../services/entity.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 
 @Component({
   selector: 'app-home',
@@ -18,14 +19,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class HomeComponent implements OnInit {
 
-  @ViewChild(MatTabGroup) group;
-  @ViewChildren(MatTab) tabs;
-  tab_num = 0;
-  selected = 0;
-  SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
 
-  title = 'Home';
   index = 0;
+
+  config: SwiperConfigInterface;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,14 +36,7 @@ export class HomeComponent implements OnInit {
     console.log("Press");
   }
 
-  swipe(eType){
-    if(eType === this.SWIPE_ACTION.RIGHT && this.index > 0){
-      this.index--;
-    }
-    else if(eType === this.SWIPE_ACTION.LEFT && this.index < this.settings.getRooms.length - 1){
-      this.index++;
-    }
-  }
+
 
   getColSpan(entity_id: string){
     let domain = entity_id.split('.')[0];
@@ -64,12 +54,12 @@ export class HomeComponent implements OnInit {
         this.http.getAuthToken(params['code']);
       } 
     });
+    this.config = {
+      effect: this.settings.getLayout['effect'] || 'slide',
+    }
 
   }
 
-  changeRoom(event: MatTabChangeEvent){
-    this.index = event.index;
-  }
 
   moveEntity(roomindex: number, tileindex: number, direction: string){
     this.settings.moveEntity(roomindex, tileindex, direction);
@@ -79,7 +69,7 @@ export class HomeComponent implements OnInit {
     this.settings.deleteEntity(roomindex, tileindex);
   }
 
-  addEntity(){
+  addEntity(index: number){
     const dialogRef = this.dialog.open(AddEntityDialog, {
       width: '90vw',
       // height: '90vh'
@@ -87,33 +77,38 @@ export class HomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.settings.addEntity(this.index, result);
+        this.settings.addEntity(index, result);
       }
     });
   }
 
   addRoom(){
     this.settings.addRoom();
+    setTimeout(()=> {
+      
     this.index = this.settings.getRooms.length - 1;
+    }, 50)
   }
 
-  moveRoom(direction: string){
-    this.settings.moveRoom(this.index, direction);
+  moveRoom(direction: string, index: number){
+    this.settings.moveRoom(index, direction);
+    if (direction.toLowerCase() == 'right') this.index++;
+    if (direction.toLowerCase() == 'left') this.index--;
   }
 
-  deleteRoom(){
-    this.settings.deleteRoom(this.index);
+  deleteRoom(index: number){
+    this.settings.deleteRoom(index);
     if (this.index > this.settings.getRooms.length - 1) this.index--
   }
 
-  editRoomName(){
+  editRoomName(index: number){
       const dialogRef = this.dialog.open(EditRoomNameDialog, {
         width: '250px',
-        data: this.settings.getRooms[this.index].name,
+        data: this.settings.getRooms[index].name,
       });
   
       dialogRef.afterClosed().subscribe(result => {
-        if (result) this.settings.editRoomName(this.index, result);
+        if (result) this.settings.editRoomName(index, result);
       });
     }
   

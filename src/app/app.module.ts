@@ -40,6 +40,19 @@ import { DeviceTrackerTileComponent } from './tiles/device-tracker-tile/device-t
 
 import { CoverTileComponent } from './tiles/cover-tile/cover-tile.component';
 
+import { SwiperModule } from 'ngx-swiper-wrapper';
+import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+ 
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+  direction: 'horizontal',
+  slidesPerView: 1,
+  navigation: false,
+  scrollbar: false,
+  pagination: false,  
+  observer: true,
+};
+
 
 @Injectable({
   providedIn: 'root'
@@ -110,6 +123,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatSnackBarModule,
     MatBottomSheetModule,
     MatListModule,
+    SwiperModule,
     // VgCoreModule,
     // VgControlsModule,
     // VgOverlayPlayModule,
@@ -124,6 +138,10 @@ export class MyHammerConfig extends HammerGestureConfig {
 
   ],
   providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig},
+    {
+      provide: SWIPER_CONFIG,
+      useValue: DEFAULT_SWIPER_CONFIG
+    },
   { provide: MAT_TABS_CONFIG, useValue: { animationDuration: '150ms'}}],
   bootstrap: [AppComponent]
 })
