@@ -83,8 +83,13 @@ export class SettingsService {
      }
   }
 
-  get getStateFont(): number {
-    return this.getNameFont * 1.9;
+  getStateFont(state: string): number {
+    let fontFactor = 1;
+    if(state) {
+      console.log(state.length);
+      if(state.length > 6) fontFactor = 6.5 / state.length;
+    }
+    return this.getNameFont * 1.9 * fontFactor;
   }
 
    get getCols(): number {

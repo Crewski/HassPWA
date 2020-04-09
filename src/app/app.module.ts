@@ -44,6 +44,7 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { LayoutModule } from '@angular/cdk/layout';
+import { MediaPlayerTileComponent } from './tiles/media-player-tile/media-player-tile.component';
  
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -100,6 +101,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     StackedChartModal,
     BinarySensorTileComponent,
     DeviceTrackerTileComponent,
+    MediaPlayerTileComponent,
 
   ],
   imports: [
