@@ -43,6 +43,7 @@ import { CoverTileComponent } from './tiles/cover-tile/cover-tile.component';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import { LayoutModule } from '@angular/cdk/layout';
  
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -124,11 +125,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatBottomSheetModule,
     MatListModule,
     SwiperModule,
-    // VgCoreModule,
-    // VgControlsModule,
-    // VgOverlayPlayModule,
-    // VgBufferingModule,
-    // VgStreamingModule
+    LayoutModule,
   ],
   entryComponents: [
     ListBottomSheet,

@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, ViewChildren, Inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SettingsService } from '../services/settings.service';
 import { HttpService } from '../services/http.service';
 import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { EntityService } from '../services/entity.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -14,7 +14,7 @@ import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],  
+  styleUrls: ['./home.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit {
@@ -26,21 +26,22 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     public settings: SettingsService,
     private http: HttpService,
     private dialog: MatDialog,
     private snackbar: MatSnackBar
   ) { }
 
-  onPress(){
+  onPress() {
     console.log("Press");
   }
 
 
 
-  getColSpan(entity_id: string){
+  getColSpan(entity_id: string) {
     let domain = entity_id.split('.')[0];
-    switch (domain){
+    switch (domain) {
       case "camera":
         return this.settings.getCols > 2 ? 3 : this.settings.getCols;
       default:
@@ -52,7 +53,7 @@ export class HomeComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['code']) {
         this.http.getAuthToken(params['code']);
-      } 
+      }
     });
     this.config = {
       effect: this.settings.getLayout['effect'] || 'slide',
@@ -61,15 +62,15 @@ export class HomeComponent implements OnInit {
   }
 
 
-  moveEntity(roomindex: number, tileindex: number, direction: string){
+  moveEntity(roomindex: number, tileindex: number, direction: string) {
     this.settings.moveEntity(roomindex, tileindex, direction);
   }
 
-  deleteEntity(roomindex: number, tileindex: number){
+  deleteEntity(roomindex: number, tileindex: number) {
     this.settings.deleteEntity(roomindex, tileindex);
   }
 
-  addEntity(index: number){
+  addEntity(index: number) {
     const dialogRef = this.dialog.open(AddEntityDialog, {
       width: '90vw',
       // height: '90vh'
@@ -82,41 +83,44 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  addRoom(){
+  addRoom() {
     this.settings.addRoom();
-    setTimeout(()=> {
-      
-    this.index = this.settings.getRooms.length - 1;
+    setTimeout(() => {
+      this.index = this.settings.getRooms.length - 1;
     }, 50)
   }
 
-  moveRoom(direction: string, index: number){
+  moveRoom(direction: string, index: number) {
     this.settings.moveRoom(index, direction);
     if (direction.toLowerCase() == 'right') this.index++;
     if (direction.toLowerCase() == 'left') this.index--;
   }
 
-  deleteRoom(index: number){
+  deleteRoom(index: number) {
     this.settings.deleteRoom(index);
     if (this.index > this.settings.getRooms.length - 1) this.index--
   }
 
-  editRoomName(index: number){
-      const dialogRef = this.dialog.open(EditRoomNameDialog, {
-        width: '250px',
-        data: this.settings.getRooms[index].name,
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) this.settings.editRoomName(index, result);
-      });
-    }
-  
+  editRoomName(index: number) {
+    const dialogRef = this.dialog.open(EditRoomNameDialog, {
+      width: '250px',
+      data: this.settings.getRooms[index].name,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.settings.editRoomName(index, result);
+    });
+  }
+
+  gotoSettings(){
+    this.router.navigate(['/settings']);
+  }
+
 
 }
 
 @Component({
-  
+
   template: `
   <h1 mat-dialog-title>Add Entity</h1>
     <div mat-dialog-content>
@@ -145,7 +149,7 @@ export class AddEntityDialog implements OnInit {
   entities: any[];
   filteredEntities: Observable<any[]>;
 
-  constructor(private entityService: EntityService, private dialogRef: MatDialogRef<AddEntityDialog>){}
+  constructor(private entityService: EntityService, private dialogRef: MatDialogRef<AddEntityDialog>) { }
 
   ngOnInit() {
     this.entities = this.entityService.getAllEntities();
@@ -157,7 +161,7 @@ export class AddEntityDialog implements OnInit {
     return this.entities.filter(entity => entity.entity_id.toLocaleLowerCase().includes(filterValue));
   }
 
-  entitySelected(){
+  entitySelected() {
     this.dialogRef.close(this.myControl.value);
   }
 }
@@ -177,9 +181,9 @@ export class AddEntityDialog implements OnInit {
   </div>
   `,
 })
-export class EditRoomNameDialog { 
+export class EditRoomNameDialog {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: string){console.log(this.data)}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: string) { console.log(this.data) }
 
 
 }

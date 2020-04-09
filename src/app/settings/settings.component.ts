@@ -16,6 +16,7 @@ export class SettingsComponent implements OnInit {
 
   url: string | null;
   cols: number;
+  colsLand: number;
   font: number | 100;
   showTab: boolean;
 
@@ -29,17 +30,16 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.url = this.settings.getConnection['url'];
     this.cols = this.settings.getLayout['cols'] || 3;
+    this.colsLand = this.settings.getLayout['cols_land'] || 6;
     this.showTab = this.settings.getLayout['tabs'];
-    console.log(this.settings.getLayout);
   }
 
   setCols() {
     this.settings.setCols(this.cols);
   }
 
-  setTabs() {
-    console.log("Change tab to " + this.showTab);
-    this.settings.setTabs(this.showTab);
+  setColsLand(){
+    this.settings.setColsLand(this.colsLand);
   }
 
   get getEffect(){
@@ -47,7 +47,7 @@ export class SettingsComponent implements OnInit {
   }
 
   setEffect(){
-    const options = ["slide", "fade", "cube", "coverflow", "flip"]
+    const options = ["slide", "fade", "coverflow", "flip"]
     const bottomSheetRef = this.bottomSheet.open(ListBottomSheet, {
       data: { options: options },
     });

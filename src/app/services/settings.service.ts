@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LayoutModule, BreakpointObserver } from '@angular/cdk/layout';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,22 @@ export class SettingsService {
   settings = {connection: {}, layout: {}, rooms: []}
   editing: boolean = false;
 
-  constructor() {
+  isPortrait: boolean = true;
+
+
+  constructor(
+    private breakpointObserver: BreakpointObserver
+  ) {
     let savedSettings = JSON.parse(localStorage.getItem(this.SETTING_NAME));
     if (savedSettings){
       this.settings = savedSettings;
     }
+    this.breakpointObserver.observe([
+      '(orientation: portrait)',
+    ]).subscribe(res => {
+      this.isPortrait = res.matches;
+      console.log(res);
+    });
    }
 
    saveSettings(){
@@ -27,13 +39,13 @@ export class SettingsService {
      this.saveSettings();
    }
 
-  //  setFont(font){
-  //    this.settings.layout['font'] = font;
-  //    this.saveSettings();
-  //  }
-
    setCols(cols){
      this.settings.layout['cols'] = cols;
+     this.saveSettings();
+   }
+
+   setColsLand(colsLand){
+     this.settings.layout['cols_land'] = colsLand;
      this.saveSettings();
    }
 
@@ -56,11 +68,19 @@ export class SettingsService {
    }
 
    get getFont(): number {
-     return 10 / (this.settings.layout['cols'] || 3);
+    if (this.isPortrait){
+   return 10 / (this.settings.layout['cols'] || 3);
+    } else {
+     return 10 / (this.settings.layout['cols_land'] || 8);
+    }
    }
 
    get getNameFont(): number {
+     if (this.isPortrait){
     return 10 / (this.settings.layout['cols'] || 3);
+     } else {
+      return 10 / (this.settings.layout['cols_land'] || 8);
+     }
   }
 
   get getStateFont(): number {
@@ -68,7 +88,11 @@ export class SettingsService {
   }
 
    get getCols(): number {
+     if (this.isPortrait){
      return this.settings.layout['cols'] || 3;
+     } else {
+       return this.settings.layout['cols_land'] || 8;
+     }
    }
 
    get getRooms(): any {
@@ -78,15 +102,6 @@ export class SettingsService {
 
    get isEditing(): boolean {
      return this.editing;
-   }
-
-   get showRoomTabs(): boolean {
-     return this.settings.layout['tabs'];
-   }
-
-   setTabs(showTabs: boolean){
-    this.settings.layout['tabs'] = showTabs;
-    this.saveSettings();
    }
 
    setEditing(edit: boolean){

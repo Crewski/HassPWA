@@ -16,9 +16,15 @@
     </mat-form-field>
     <button mat-button (tap)="tryConnect()" color="primary">Connect</button>
     <div class="settings-item">
-        <div style="flex: 0 0">Columns:</div>
-        <mat-slider style="flex: 1 1" max="12" min="1" step="1" thumbLabel="true" [(ngModel)]="cols"
+        <div style="flex: 0 0">Columns Portrait:</div>
+        <mat-slider style="flex: 1 1" max="6" min="1" step="1" thumbLabel="true" [(ngModel)]="cols"
             (change)="setCols()">
+        </mat-slider>
+    </div>
+    <div class="settings-item">
+        <div style="flex: 0 0">Columns Landscape:</div>
+        <mat-slider style="flex: 1 1" max="20" min="1" step="1" thumbLabel="true" [(ngModel)]="colsLand"
+            (change)="setColsLand()">
         </mat-slider>
     </div>
     <div>
