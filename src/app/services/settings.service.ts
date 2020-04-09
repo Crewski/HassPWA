@@ -30,7 +30,6 @@ export class SettingsService {
    }
 
    saveSettings(){
-     console.log(this.settings);
      localStorage.setItem(this.SETTING_NAME, JSON.stringify(this.settings));
    }
 
@@ -59,6 +58,11 @@ export class SettingsService {
      this.saveSettings();
    }
 
+   setUnits(units){
+     this.settings.layout['units'] = units;
+     this.saveSettings();
+   }
+
    get getConnection(): any{
      return this.settings.connection;
    }
@@ -83,11 +87,11 @@ export class SettingsService {
      }
   }
 
-  getStateFont(state: string): number {
+  getStateFont(state: any): number {
     let fontFactor = 1;
     if(state) {
-      console.log(state.length);
-      if(state.length > 6) fontFactor = 6.5 / state.length;
+      state = state.toString();
+      if(state.length > 6) fontFactor = 6 / state.length;
     }
     return this.getNameFont * 1.9 * fontFactor;
   }

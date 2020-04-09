@@ -5,10 +5,9 @@
 <ng-template [ngTemplateOutlet]="tile"></ng-template>
 </button>
 
-<ng-template #tile>
-    <div *ngIf='waitingChange' class="action-spinner"><mat-spinner color='primary'></mat-spinner></div>    
+<ng-template #tile>   
     <mat-grid-list cols='1' rowHeight="5:1">
-        <mat-grid-tile [style.color]='iconColor'>
+        <mat-grid-tile  [style.color]='iconColor'>
             <span  *ngIf='entity?.attributes' class="iconify"
             [attr.data-icon]='entity?.attributes?.icon' data-height="100%"></span>
         </mat-grid-tile>

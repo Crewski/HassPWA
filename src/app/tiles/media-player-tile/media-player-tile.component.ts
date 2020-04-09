@@ -15,8 +15,6 @@ export class MediaPlayerTileComponent implements OnInit {
   active: boolean = true;
   iconColor: string;
 
-  waitingChange: boolean = false;
-
   constructor(
     private entityService: EntityService,
     public settings: SettingsService,
@@ -39,7 +37,7 @@ export class MediaPlayerTileComponent implements OnInit {
 
 
   processEntity() {
-    if (this.entity.state.toLowerCase() == 'off' || this.entity.state.toLowerCase() == 'idle'){
+    if (this.entity.state.toLowerCase() == 'off' || this.entity.state.toLowerCase() == 'idle' || this.entity.state.toLowerCase() == 'unavailable'){
       this.active = false;
       this.iconColor = this.entityService.standardOffColor;
     } else {

@@ -9,8 +9,13 @@ import * as Hammer from 'hammerjs';
 
 @Component({
   selector: 'camera-tile',
-  templateUrl: './camera-tile.component.html',
-  styleUrls: ['./camera-tile.component.scss']
+  template: `
+  <button mat-stroked-button style="width: 100%; height: 100%;"  (tap)="getStream()">
+
+<img class="camera-img" *ngIf="cameraimg" [src]="cameraimg" alt="Camera " />
+<div class="camera-name">{{getFriendlyName | spacedText | titlecase}}</div>
+</button>
+  `,
 })
 export class CameraTileComponent implements OnInit, OnDestroy {
 
@@ -51,7 +56,7 @@ export class CameraTileComponent implements OnInit, OnDestroy {
     let url = 'https://' + this.settings.getConnection['url'];
 
     url = url + await this.ws.getCameraStream(this.entity_id);
-    const dialogRef = this.dialog.open(CameraStreamDialog, {
+    this.dialog.open(CameraStreamDialog, {
       // panelClass: 'graph-dialog',
       data: url,
     });

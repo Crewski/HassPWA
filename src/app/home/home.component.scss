@@ -5,7 +5,7 @@
     right: 5px;
     color: red;
     font-size: 25px;
-    z-index: 99999;
+    z-index: 99;
 }
 
 .arrow-right {
@@ -15,7 +15,7 @@
     right: 5px;
     color: blue;
     font-size: 25px;
-    z-index: 99999;
+    z-index: 99;
 }
 .arrow-left {
     position: absolute;
@@ -23,12 +23,12 @@
     bottom: 15px;
     left: 5px;
     color: blue;
-    z-index: 99999;
+    z-index: 99;
 }
 
-.header-less-tabs.mat-tab-group .mat-tab-header {
-    display: none;
-  }
+// .header-less-tabs.mat-tab-group .mat-tab-header {
+//     display: none;
+//   }
 
 .top-bar{
     position: sticky;

@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ListBottomSheet } from 'src/app/modals/listbottomsheet';
 import * as Hammer from 'hammerjs';
+import { ChartModal } from 'src/app/modals/chartmodal';
 
 @Component({
   selector: 'climate-tile',
@@ -78,9 +79,18 @@ export class ClimateTileComponent implements OnInit {
 
   get getState(): string {
     if (!this.entity) return null;
+    
     if (this.entity && this.entity.attributes){
-      if (this.entity.attributes.current_temperature) return Math.round(this.entity.attributes.current_temperature).toString();
-      if (this.entity.attributes.target_temp_high) return Math.round(this.entity.attributes.target_temp_high).toString();
+      if (this.entity.attributes.current_temperature) {
+        let state = Math.round(this.entity.attributes.current_temperature).toString();
+        if (this.entity.attributes['unit_of_measurement']){
+          state = state + this.entity.attributes['unit_of_measurement'];
+        } else if (this.settings.getLayout['units'] && this.settings.getLayout['units']['temperature']){
+          state = state + this.settings.getLayout['units']['temperature']
+        }
+        return state;
+      } 
+      
     }
     return 'Off';
   }
@@ -149,7 +159,8 @@ export class ClimateDetailDialog implements OnInit, OnDestroy {
     private entityService: EntityService,
     private websocketService: WebsocketService,
     private dialogRef: MatDialogRef<ClimateDetailDialog>,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private dialog: MatDialog,
   ) {
   }
 
@@ -245,6 +256,13 @@ export class ClimateDetailDialog implements OnInit, OnDestroy {
 
   get getStep(): number {
     return this.entity.attributes.target_temp_step ? this.entity.attributes.target_temp_step : 1;
+  }
+
+  showHistory(){
+    this.dialog.open(ChartModal, {
+      panelClass: 'graph-dialog',
+      data: {entity_id: this.entity_id, friendly_name: this.getFriendlyName}
+    });
   }
 
 

@@ -81,8 +81,10 @@ export class WebsocketService {
     }, 1000);
     this.isConnected.next(true);
     this.heartbeat();
+    this.getConfig();
     await this.receiveStates();
     this.receivedStateChanges();
+    
   }
 
   getLongLivedToken() {
@@ -126,7 +128,6 @@ export class WebsocketService {
       }).catch(() => {
         console.log("disconnected");
         this.isConnected.next(false);
-        // this.initConnection;
       })
     }
   }
@@ -166,16 +167,34 @@ export class WebsocketService {
     let id = this.messageID;
     this.messageID++;
     let service_data = { entity_id: entity_id };
-    // if (option) service_data['option'] = option;
     if (options) options.forEach(option => service_data[option.key] = option.value);
     let msg = { id: id, type: 'call_service', domain: domain, service: service, service_data: service_data };
-    console.log(msg);
+    this.snackBar.open(domain + '.' + service + ' called', null, {
+      duration: 1000
+    })
     this.haWebSocket.next(msg);
     return new Promise((resolve) => {
       let sub = this.message_change.subscribe(data => {
         if (data.id == id) {
           sub.unsubscribe();
           resolve(data);
+        }
+      })
+    })
+  }
+
+  getConfig() {
+    // window.navigator.vibrate(150);
+    let id = this.messageID;
+    this.messageID++;
+    let msg = { id: id, type: 'get_config' };
+    this.haWebSocket.next(msg);
+    return new Promise((resolve) => {
+      let sub = this.message_change.subscribe(data => {
+        if (data.id == id) {
+          sub.unsubscribe();
+          this.settings.setUnits(data.result.unit_system);
+          resolve(true);
         }
       })
     })
