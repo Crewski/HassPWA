@@ -132,8 +132,9 @@ export class HomeComponent implements OnInit {
            [formControl]="myControl"
            [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="entitySelected()">
-      <mat-option *ngFor="let entity of filteredEntities | async" [value]="entity.entity_id">        
-        {{entity.entity_id}}
+      <mat-option style="min-height: 48px; line-height: 1.15; height: auto; padding: 8px 16px; white-space: normal;" *ngFor="let entity of filteredEntities | async" [value]="entity.entity_id">        
+      <b>{{entity.attributes.friendly_name}}</b><br>  
+      {{entity.entity_id}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
@@ -153,12 +154,30 @@ export class AddEntityDialog implements OnInit {
 
   ngOnInit() {
     this.entities = this.entityService.getAllEntities();
+    this.entities.sort((a,b) => {
+      try {
+      let aName = a.attributes.friendly_name ? a.attributes.friendly_name : a.entity_id.split['.'][1];
+      let bName = b.attributes.friendly_name ? b.attributes.friendly_name : b.entity_id.split['.'][1];
+      
+        if (aName > bName) return 1;
+        if (aName < bName) return -1;
+      } catch (e) { return -1;}
+    })
+    this.entities.unshift({entity_id: 'blank.blank', attributes: {friendly_name: 'Blank Tile'}});
     this.filteredEntities = this.myControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)))
   }
 
   private _filter(value: string): any[] {
     const filterValue = value.toLocaleLowerCase();
-    return this.entities.filter(entity => entity.entity_id.toLocaleLowerCase().includes(filterValue));
+    return this.entities.filter(entity => {
+      if (entity.attributes.friendly_name){
+        return entity.entity_id.toLocaleLowerCase().includes(filterValue) || entity.attributes.friendly_name.toLowerCase().includes(filterValue);
+    
+      } else {
+        return entity.entity_id.toLocaleLowerCase().includes(filterValue);
+      }
+      }
+    );
   }
 
   entitySelected() {

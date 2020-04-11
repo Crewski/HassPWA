@@ -37,15 +37,22 @@ export class MediaPlayerTileComponent implements OnInit {
 
 
   processEntity() {
-    if (this.entity.state.toLowerCase() == 'off' || this.entity.state.toLowerCase() == 'idle' || this.entity.state.toLowerCase() == 'unavailable'){
+    if (this.entity.state.toLowerCase() == 'off' || this.entity.state.toLowerCase() == 'idle' || this.entity.state.toLowerCase() == 'unavailable' || this.entity.state.toLowerCase() == 'standby'){
       this.active = false;
       this.iconColor = this.entityService.standardOffColor;
     } else {
       this.active = true;
       this.iconColor = this.entityService.standardOnColor;
     }
-    if (!this.entity || !this.entity.attributes ||  this.entity.attributes.icon) return;
-    this.entity.attributes['icon'] = "mdi:volume-high";
+    if (!this.entity || !this.entity.attributes ||  this.entity.attributes.icon || !this.entity.attributes.device_class) return;
+    switch(this.entity.attributes.device_class.toLowerCase()){
+      case 'tv':
+        this.entity.attributes.icon = 'mdi:television';
+        break;
+        default:
+        this.entity.attributes.icon = 'mdi:volume-high';
+        break;
+    }
   }
 
   onTap() {

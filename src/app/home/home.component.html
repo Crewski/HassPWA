@@ -38,6 +38,7 @@
 
                     </section>
                     <section [ngSwitch]="tile.split('.')[0]" style="width: 90%; height: 90%;" >
+                    <div *ngSwitchCase="'blank'"></div>
                     <light-tile *ngSwitchCase="'light'" [entity_id]="tile"></light-tile>
                     <camera-tile *ngSwitchCase="'camera'" [entity_id]="tile"></camera-tile>
                     <climate-tile *ngSwitchCase="'climate'" [entity_id]="tile"></climate-tile>

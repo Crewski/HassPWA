@@ -6,7 +6,7 @@
 </button>
 
 <ng-template #tile>   
-    <mat-grid-list cols='1' rowHeight="5:1">
+    <mat-grid-list cols='1' rowHeight="5:1"  [style.opacity]="entity?.state == 'unavailable' ? 0.3 : 1">
         <mat-grid-tile  [style.color]='iconColor'>
             <span  *ngIf='entity?.attributes' class="iconify"
             [attr.data-icon]='entity?.attributes?.icon' data-height="100%"></span>
