@@ -53,7 +53,7 @@ export class StackedChartModal implements OnInit {
 
     doGraph(data: any) {
         let graphData = [];
-        data[0].forEach((point, index) => {
+        data[0].forEach((point, index, array) => {
             if (index == 0) return;
             // let ganttData = [];
             // let val = this.convertToNumber(data[0][index - 1].state);
@@ -61,6 +61,7 @@ export class StackedChartModal implements OnInit {
             let val = this.labels.findIndex(label => label == data[0][index - 1].state) + 1;
             graphData.push({ x: new Date(data[0][index - 1].last_updated), y: val })
             graphData.push({ x: new Date(point.last_updated), y: val })
+            if (index == array.length - 1) graphData.push({ x: new Date(), y: val})
 
 
 
