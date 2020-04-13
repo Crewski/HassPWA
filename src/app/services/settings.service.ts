@@ -72,6 +72,11 @@ export class SettingsService {
      this.saveSettings();
    }
 
+   setTileColor(color: string){
+     this.settings.tiles["tile_color"] = color;
+     this.saveSettings();
+   }
+
    get getConnection(): any{
      return this.settings.connection;
    }
@@ -98,6 +103,10 @@ export class SettingsService {
      } else {
       return 10 / (this.settings.layout['cols_land'] || 8);
      }
+  }
+  
+  get getTileColor(): string {
+    return this.settings.tiles['tile_color'] || 'rgb(255, 255, 0)';
   }
 
   getStateFont(state: any): number {

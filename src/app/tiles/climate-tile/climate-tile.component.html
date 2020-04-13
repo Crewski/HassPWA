@@ -1,7 +1,7 @@
 <button *ngIf="!active" mat-stroked-button style="width: 100%; height: 100%;" (tap)="onTap()">
     <ng-template [ngTemplateOutlet]="tile"></ng-template>
     </button>
-    <button *ngIf="active" mat-flat-button color="primary" style="width: 100%; height: 100%;" (tap)="onTap()">
+    <button *ngIf="active" mat-flat-button [style.background-color]="settings.getTileColor" style="width: 100%; height: 100%; color: white" (tap)="onTap()">
     <ng-template [ngTemplateOutlet]="tile"></ng-template>
     </button>
     

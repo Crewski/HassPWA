@@ -23,7 +23,7 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SettingsComponent, SettingsDialog } from './settings/settings.component';
+import { SettingsComponent, SettingsDialog, TileColorDialog } from './settings/settings.component';
 import { HomeComponent, AddEntityDialog, EditRoomNameDialog } from './home/home.component';
 import { LightTileComponent, LightDetailDialog } from './tiles/light-tile/light-tile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -103,6 +103,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     BinarySensorTileComponent,
     DeviceTrackerTileComponent,
     MediaPlayerTileComponent,
+    TileColorDialog
 
   ],
   imports: [

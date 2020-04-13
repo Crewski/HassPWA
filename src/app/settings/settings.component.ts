@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { SettingsService } from '../services/settings.service';
 import { environment } from 'src/environments/environment';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { PasscodeDialog } from '../modals/passcode-dialog';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ListBottomSheet } from '../modals/listbottomsheet';
+import iro from '@jaames/iro';
 
 @Component({
   selector: 'app-settings',
@@ -48,6 +49,10 @@ export class SettingsComponent implements OnInit {
     return this.settings.getLayout['effect'] || 'slide';
   }
 
+  get getTileColor(){
+    return this.settings.getTileColor;
+  }
+
   setEffect(){
     const options = ["slide", "fade", "coverflow", "flip"]
     const bottomSheetRef = this.bottomSheet.open(ListBottomSheet, {
@@ -61,16 +66,25 @@ export class SettingsComponent implements OnInit {
   }
 
   setClimateDisplay(){
-    console.log(this.showCurrent);
     this.settings.setClimateDisplay(this.showCurrent);
   }
 
 
   tryConnect() {
     this.settings.setUrl(this.url);
-
     let ha_url = 'https://' + this.url + '/auth/authorize?client_id=' + environment.app_url + '&redirect_uri=' + environment.app_url + '/home';
     window.open(ha_url, "_blank");
+  }
+
+  openTileColor(){
+    const dialogRef = this.dialog.open(TileColorDialog, {
+      data: this.getTileColor
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.settings.setTileColor(result);
+      }
+    });
   }
 
   resetRooms() {
@@ -138,5 +152,42 @@ export class SettingsComponent implements OnInit {
   `,
 })
 export class SettingsDialog {
+
+}
+
+@Component({
+  
+  template: `
+  <div style="width: 250px; height: 250px"><div  id="pickerColor"></div></div>
+  `,
+})
+export class TileColorDialog implements AfterViewInit {
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public color: string,
+    private dialogRef: MatDialogRef<TileColorDialog>
+  ){}
+
+  ngAfterViewInit(){
+    const colorPicker = new iro.ColorPicker("#pickerColor", {
+      // Set the size of the color picker
+      width: 250,
+      height: 250,
+      color: this.color,
+      layout: [
+        {
+          component: iro.ui.Wheel,
+          options: {
+            wheelLightness: false
+          }
+        },
+      ],
+    });
+
+    colorPicker.on('input:end', (color) => {
+        this.dialogRef.close('rgb(' + [color.rgb.r, color.rgb.g, color.rgb.b].join(', ') + ')');
+      
+    });
+  }
 
 }

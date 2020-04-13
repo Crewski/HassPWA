@@ -7,7 +7,8 @@
 </mat-toolbar>
 
 <div class="settings-area">
-    <button style="padding: 10px 0px; margin-bottom: 15px;" mat-flat-button color="accent" (tap)="editRooms()">Edit Rooms</button>
+    <button style="padding: 10px 0px; margin-bottom: 15px;" mat-flat-button color="accent" (tap)="editRooms()">Edit
+        Rooms</button>
     <mat-divider></mat-divider>
     <h3>Connection:</h3>
     <mat-form-field class="width: 100%">
@@ -32,11 +33,18 @@
         </mat-slider>
     </div>
     <div>
-        Slide Effect  <button mat-stroked-button color="accent" (tap)="setEffect()">{{ getEffect | titlecase }}</button>
+        Slide Effect <button mat-stroked-button color="accent" (tap)="setEffect()">{{ getEffect | titlecase }}</button>
     </div>
     <mat-divider></mat-divider>
     <h3>Tiles:</h3>
-    <mat-checkbox [(ngModel)]="showCurrent" (change)="setClimateDisplay()"  color="primary">Show Climate Current Temp</mat-checkbox>
+
+    <div >
+        <span >Active Tile Color:</span>
+        <button mat-flat-button style="color: white" [style.background-color]="getTileColor" (tap)="openTileColor()">Active Color 
+        </button>
+    </div>
+    <mat-checkbox [(ngModel)]="showCurrent" (change)="setClimateDisplay()" color="primary">Show Climate Current Temp
+    </mat-checkbox>
     <div>
         <button mat-button color="accent" (tap)="setPasscode()">Set Passcode</button>
     </div>
