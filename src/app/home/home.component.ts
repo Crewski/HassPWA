@@ -1,15 +1,14 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, ViewChildren, Inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SettingsService } from '../services/settings.service';
 import { HttpService } from '../services/http.service';
-import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { EntityService } from '../services/entity.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -30,7 +29,6 @@ export class HomeComponent implements OnInit {
     public settings: SettingsService,
     private http: HttpService,
     private dialog: MatDialog,
-    private snackbar: MatSnackBar
   ) { }
 
   onPress() {
@@ -51,8 +49,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      if (params['code']) {
-        this.http.getAuthToken(params['code']);
+      if (params['code']) {        
+        window.opener.postMessage(params['code'], environment.app_url + '/settings');
       }
     });
     this.config = {

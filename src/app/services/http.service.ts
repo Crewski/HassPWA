@@ -22,7 +22,7 @@ export class HttpService {
     .set('client_id', environment.app_url)
     .set('code', code);
     this.http.post('https://' + this.settings.getConnection['url'] + '/auth/token', body, {headers: headers}).subscribe(res => {
-      console.log(res);
+      
       this.ws.initConnection(res['access_token']);
     })
   }

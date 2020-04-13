@@ -7,6 +7,7 @@ import { PasscodeDialog } from '../modals/passcode-dialog';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ListBottomSheet } from '../modals/listbottomsheet';
 import iro from '@jaames/iro';
+import { HttpService } from '../services/http.service';
 
 @Component({
   selector: 'app-settings',
@@ -26,7 +27,8 @@ export class SettingsComponent implements OnInit {
     private settings: SettingsService,
     private dialog: MatDialog,
     private router: Router,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private http: HttpService
   ) { }
 
   ngOnInit(): void {
@@ -73,7 +75,12 @@ export class SettingsComponent implements OnInit {
   tryConnect() {
     this.settings.setUrl(this.url);
     let ha_url = 'https://' + this.url + '/auth/authorize?client_id=' + environment.app_url + '&redirect_uri=' + environment.app_url + '/home';
-    window.open(ha_url, "_blank");
+    let popup = window.open(ha_url, "authWindow");
+    window.addEventListener('message', (code) => {
+      window.removeEventListener('message', null)
+      popup.close();
+      this.http.getAuthToken(code.data);
+    })
   }
 
   openTileColor(){
