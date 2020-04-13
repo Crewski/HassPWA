@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, ViewEncapsulation, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, ViewEncapsulation, Inject, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { EntityService } from 'src/app/services/entity.service';
 import { WebsocketService, KeyValuePair } from 'src/app/services/websocket.service';
 import { HttpService } from 'src/app/services/http.service';
@@ -8,6 +8,7 @@ import iro from '@jaames/iro';
 import { Subscription } from 'rxjs';
 import * as Hammer from 'hammerjs';
 import { HammerGestureConfig } from '@angular/platform-browser';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'light-tile',
@@ -106,7 +107,9 @@ export class LightTileComponent implements OnInit {
   templateUrl: './light-details.html',
 })
 
-export class LightDetailDialog implements OnInit, OnDestroy {
+export class LightDetailDialog implements OnInit, OnDestroy, AfterViewInit {
+
+  @ViewChild('content') elementView: ElementRef;
 
   entity: any;
   sub: Subscription;
@@ -121,6 +124,7 @@ export class LightDetailDialog implements OnInit, OnDestroy {
     private entityService: EntityService,
     private websocketService: WebsocketService,
     private dialogRef: MatDialogRef<LightDetailDialog>,
+    private breakpointObserver: BreakpointObserver
   ) {
 
   }
@@ -148,6 +152,15 @@ export class LightDetailDialog implements OnInit, OnDestroy {
         console.log(err);
       }
     })
+  }
+
+  ngAfterViewInit(){
+    this.breakpointObserver.observe([
+      '(orientation: portrait)',
+    ]).subscribe(res => {
+      this.colorPicker.resize(this.elementView.nativeElement.offsetWidth);
+      this.tempPicker.resize(this.elementView.nativeElement.offsetWidth);
+    });
   }
 
   ngOnDestroy(){
@@ -204,7 +217,7 @@ export class LightDetailDialog implements OnInit, OnDestroy {
       
       this.colorPicker = new iro.ColorPicker("#pickerColor", {
         // Set the size of the color picker
-        width: 250,
+        // width: 250,
         layout: [
           {
             component: iro.ui.Slider,
@@ -250,7 +263,7 @@ export class LightDetailDialog implements OnInit, OnDestroy {
       
       this.tempPicker = new iro.ColorPicker("#pickerTemp", {
         // Set the size of the color picker
-        width: 250,
+        // width: 250,
         layout: [
           {
             component: iro.ui.Slider,
@@ -273,7 +286,9 @@ export class LightDetailDialog implements OnInit, OnDestroy {
     if (clippedmired < this.entity.attributes['min_mireds']) clippedmired = this.entity.attributes['min-mireds'];
     if (clippedmired > this.entity.attributes['max_mireds']) clippedmired = this.entity.attributes['max-mireds'];
     this.tempPicker.color.kelvin = 1000000 / clippedmired;
+    // if (this.elementView) this.tempPicker.resize(this.elementView.nativeElement.offsetWidth);
   }
+  
 
 
 }

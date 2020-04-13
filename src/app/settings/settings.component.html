@@ -7,7 +7,9 @@
 </mat-toolbar>
 
 <div class="settings-area">
-    <button style="margin: 30px" mat-flat-button color="accent" (tap)="editRooms()">Edit Rooms</button>
+    <button style="padding: 10px 0px; margin-bottom: 15px;" mat-flat-button color="accent" (tap)="editRooms()">Edit Rooms</button>
+    <mat-divider></mat-divider>
+    <h3>Connection:</h3>
     <mat-form-field class="width: 100%">
         <mat-label>Home Assistant URL</mat-label>
         <span matPrefix>https://</span>
@@ -15,6 +17,8 @@
         <mat-hint align="start"><strong>Must be ssl and external</strong> </mat-hint>
     </mat-form-field>
     <button mat-button (tap)="tryConnect()" color="primary">Connect</button>
+    <mat-divider></mat-divider>
+    <h3>Screen Layout:</h3>
     <div class="settings-item">
         <div style="flex: 0 0">Columns Portrait:</div>
         <mat-slider style="flex: 1 1" max="6" min="1" step="1" thumbLabel="true" [(ngModel)]="cols"
@@ -30,6 +34,9 @@
     <div>
         Slide Effect  <button mat-stroked-button color="accent" (tap)="setEffect()">{{ getEffect | titlecase }}</button>
     </div>
+    <mat-divider></mat-divider>
+    <h3>Tiles:</h3>
+    <mat-checkbox [(ngModel)]="showCurrent" (change)="setClimateDisplay()"  color="primary">Show Climate Current Temp</mat-checkbox>
     <div>
         <button mat-button color="accent" (tap)="setPasscode()">Set Passcode</button>
     </div>

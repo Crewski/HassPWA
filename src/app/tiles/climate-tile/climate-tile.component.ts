@@ -81,15 +81,21 @@ export class ClimateTileComponent implements OnInit {
     if (!this.entity) return null;
     
     if (this.entity && this.entity.attributes){
-      if (this.entity.attributes.current_temperature) {
-        let state = Math.round(this.entity.attributes.current_temperature).toString();
-        if (this.entity.attributes['unit_of_measurement']){
-          state = state + this.entity.attributes['unit_of_measurement'];
-        } else if (this.settings.getLayout['units'] && this.settings.getLayout['units']['temperature']){
-          state = state + this.settings.getLayout['units']['temperature']
-        }
-        return state;
-      } 
+      let state = '';
+      if (this.settings.getTiles['show_current'] && this.entity.attributes.current_temperature) {
+        state = Math.round(this.entity.attributes.current_temperature).toString();
+      } else if (this.entity.attributes.temperature) {
+        state = Math.round(this.entity.attributes.temperature).toString();        
+      } else if (this.entity.attributes.target_temp_high) {
+        state = Math.round(this.entity.attributes.target_temp_high).toString();        
+      }
+      
+      if (this.entity.attributes['unit_of_measurement']){
+        state = state + this.entity.attributes['unit_of_measurement'];
+      } else if (this.settings.getLayout['units'] && this.settings.getLayout['units']['temperature']){
+        state = state + this.settings.getLayout['units']['temperature']
+      }  
+      return state;
       
     }
     return 'Off';

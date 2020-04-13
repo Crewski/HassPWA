@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LayoutModule, BreakpointObserver } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,14 @@ export class SettingsService {
 
   SETTING_NAME = "HassPWA"
 
-  settings = {connection: {}, layout: {}, rooms: []}
+  settings = {
+    connection: {}, 
+    layout: {}, 
+    rooms: [], 
+    tiles: {
+      show_current: true,
+    }
+  };
   editing: boolean = false;
 
   isPortrait: boolean = true;
@@ -19,13 +26,15 @@ export class SettingsService {
   ) {
     let savedSettings = JSON.parse(localStorage.getItem(this.SETTING_NAME));
     if (savedSettings){
-      this.settings = savedSettings;
+      if (savedSettings.connection) this.settings.connection = savedSettings.connection;
+      if (savedSettings.layout) this.settings.layout = savedSettings.layout;
+      if (savedSettings.rooms) this.settings.rooms = savedSettings.rooms;
+      if (savedSettings.tiles) this.settings.tiles = savedSettings.tiles;
     }
     this.breakpointObserver.observe([
       '(orientation: portrait)',
     ]).subscribe(res => {
       this.isPortrait = res.matches;
-      console.log(res);
     });
    }
 
@@ -69,6 +78,10 @@ export class SettingsService {
 
    get getLayout(): any{
      return this.settings.layout;
+   }
+
+   get getTiles(): any{
+     return this.settings.tiles || {showCurrent: true};
    }
 
    get getFont(): number {
@@ -179,6 +192,11 @@ export class SettingsService {
 
    setSwiperEffect(effect: string){
      this.settings.layout['effect'] = effect;
+     this.saveSettings();
+   }
+
+   setClimateDisplay(showCurrent: boolean){
+     this.settings.tiles['show_current'] = showCurrent;
      this.saveSettings();
    }
 }

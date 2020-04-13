@@ -19,6 +19,7 @@ export class SettingsComponent implements OnInit {
   colsLand: number;
   font: number | 100;
   showTab: boolean;
+  showCurrent: boolean;
 
   constructor(
     private settings: SettingsService,
@@ -32,6 +33,7 @@ export class SettingsComponent implements OnInit {
     this.cols = this.settings.getLayout['cols'] || 3;
     this.colsLand = this.settings.getLayout['cols_land'] || 6;
     this.showTab = this.settings.getLayout['tabs'];
+    this.showCurrent = this.settings.getTiles['show_current'];
   }
 
   setCols() {
@@ -56,6 +58,11 @@ export class SettingsComponent implements OnInit {
         this.settings.setSwiperEffect(option);
       }
     });
+  }
+
+  setClimateDisplay(){
+    console.log(this.showCurrent);
+    this.settings.setClimateDisplay(this.showCurrent);
   }
 
 
