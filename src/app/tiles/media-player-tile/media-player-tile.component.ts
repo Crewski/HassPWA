@@ -11,7 +11,7 @@ export class MediaPlayerTileComponent implements OnInit {
   @Input() entity_id: string;
   entity: any = {};
   active: boolean = true;
-  iconColor: string;
+  iconColor: string = null;
 
   constructor(
     private entityService: EntityService,
@@ -36,10 +36,10 @@ export class MediaPlayerTileComponent implements OnInit {
   processEntity() {
     if (this.entity.state.toLowerCase() == 'off' || this.entity.state.toLowerCase() == 'idle' || this.entity.state.toLowerCase() == 'unavailable' || this.entity.state.toLowerCase() == 'standby'){
       this.active = false;
-      this.iconColor = this.entityService.standardOffColor;
+      // this.iconColor = this.entityService.standardOffColor;
     } else {
       this.active = true;
-      this.iconColor = this.entityService.standardOnColor;
+      // this.iconColor = this.entityService.standardOnColor;
     }
     if (!this.entity || !this.entity.attributes ||  this.entity.attributes.icon || !this.entity.attributes.device_class) return;
     switch(this.entity.attributes.device_class.toLowerCase()){

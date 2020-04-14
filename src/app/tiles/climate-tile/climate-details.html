@@ -1,9 +1,9 @@
 <div style="width: 100%; height: 100%;" id="dialog-cont">
   <h1 mat-dialog-title>{{ getFriendlyName }}</h1>
-  <h1 mat-dialog-title><span style="font-weight: bolder;">{{ getCurrentTemp }}</span>   (
-    <span *ngIf="entity.attributes.temperature">{{entity.attributes.temperature}}</span>
-    <span *ngIf="entity.attributes.target_temp_low">{{entity.attributes.target_temp_low}} - {{entity.attributes.target_temp_high}}</span>
-    )</h1>
+  <h1 mat-dialog-title><span style="font-weight: bolder;">{{ getCurrentTemp }}</span>
+    <!-- <span *ngIf="entity.attributes.temperature">{{entity.attributes.temperature}}</span>
+    <span *ngIf="entity.attributes.target_temp_low">{{entity.attributes.target_temp_low}} - {{entity.attributes.target_temp_high}}</span> -->
+    </h1>
 
   <table width="100%">
     <tr *ngIf="entity.attributes.temperature" class='dialog-setting'>
@@ -14,19 +14,19 @@
         </mat-slider>
       </td>
     </tr>
-    <tr *ngIf="entity.attributes.target_temp_high" class='dialog-setting'>
+    <tr *ngIf="entity.attributes.target_temp_low" class='dialog-setting'>
       <td>Target Min:</td>
       <td>
         <mat-slider [max]="getMax" [min]="getMin" [step]="getStep" thumbLabel="true"
-          [(ngModel)]="entity.attributes.target_temp_high" (change)="updateEntity('high')">
+          [(ngModel)]="entity.attributes.target_temp_low" (change)="updateEntity('low')">
         </mat-slider>
       </td>
     </tr>
-    <tr *ngIf="entity.attributes.target_temp_low" class='dialog-setting'>
+    <tr *ngIf="entity.attributes.target_temp_high" class='dialog-setting'>
       <td>Target Max:</td>
       <td>
         <mat-slider [max]="getMax" [min]="getMin" [step]="getStep" thumbLabel="true"
-          [(ngModel)]="entity.attributes.target_temp_low" (change)="updateEntity('low')">
+          [(ngModel)]="entity.attributes.target_temp_high" (change)="updateEntity('high')">
         </mat-slider>
       </td>
     </tr>

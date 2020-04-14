@@ -14,7 +14,7 @@ export class CoverTileComponent implements OnInit {
   @Input() entity_id: string;
   entity: any = {};
   active: boolean = true;
-  iconColor: string;
+  iconColor: string = null;
   iconOn: string;
   iconOff: string;
 
@@ -58,12 +58,12 @@ export class CoverTileComponent implements OnInit {
     switch (this.entity.state.toLowerCase()){
       case 'closed':
         this.active = false;
-        this.iconColor = this.entityService.standardOffColor;
+        // this.iconColor = this.entityService.standardOffColor;
         if (!this.entity.attributes['icon']) this.entity.attributes['icon'] = this.iconOff;
         break;
       case 'open':
         this.active = true;
-        this.iconColor = this.entityService.standardOnColor;
+        // this.iconColor = this.entityService.standardOnColor;
         if (!this.entity.attributes['icon']) this.entity.attributes['icon'] = this.iconOn;
         break;
     }

@@ -17,7 +17,7 @@ export class LightTileComponent implements OnInit {
   @Input() entity_id: string;
   entity: any = {};
   active: boolean = false;
-  iconColor: string = 'rgb(255,0,0)';
+  iconColor: string = null;
 
 
   waitingChange: boolean = false;
@@ -56,11 +56,11 @@ export class LightTileComponent implements OnInit {
       if (this.entity.attributes['rgb_color']) {
         this.iconColor = 'rgb(' + this.entity.attributes['rgb_color'].join(', ') + ')';
       } else {
-        this.iconColor = this.entityService.standardOnColor;
+        // this.iconColor = this.entityService.standardOnColor;
       }
     } else {
       this.active = false;
-      this.iconColor = this.entityService.standardOffColor;
+      // this.iconColor = this.entityService.standardOffColor;
     }
   }
 

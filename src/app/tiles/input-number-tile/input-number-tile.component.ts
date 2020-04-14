@@ -13,7 +13,7 @@ export class InputNumberTileComponent implements OnInit {
   @Input() entity_id: string;
   entity: any = {};
   active: boolean = true;
-  iconColor: string;
+  iconColor: string = null;
 
   waitingChange: boolean = false;
 
@@ -25,7 +25,6 @@ export class InputNumberTileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.iconColor = this.entityService.standardOnColor;
     this.entityService.entity_change.subscribe(data => {
       try {
         this.entity = data.find(x => x.entity_id == this.entity_id);

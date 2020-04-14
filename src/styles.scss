@@ -1,30 +1,19 @@
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
-// Plus imports for other components in your app.
+@import '~angular-material-css-vars/main';
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
+// optional
+// $mat-css-dark-theme-selector: '.isDarkTheme';
+// $mat-css-light-theme-selector: '.isLightTheme';
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$HassPWA-primary: mat-palette($mat-deep-orange, 500);
-$HassPWA-accent: mat-palette($mat-indigo, A200, A100, A400);
+// @import '~angular-material-css-vars/public-util';
 
-// The warn palette is optional (defaults to red).
-$HassPWA-warn: mat-palette($mat-red);
 
-// Create the theme object (a Sass map containing all of the palettes).
-$HassPWA-theme: mat-light-theme($HassPWA-primary, $HassPWA-accent, $HassPWA-warn);
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($HassPWA-theme);
+@include mat-css-set-palette-defaults($mat-light-blue, 'primary');
+@include mat-css-set-palette-defaults($mat-pink, 'accent');
+// @include mat-css-set-palette-defaults($mat-red, 'warn');
+
+@include init-material-css-vars();
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -32,10 +21,6 @@ html, body { height: 100%; width: 100%;
     position: fixed;
     overflow: hidden;}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-.mat-success{
-    color: #00ff00;
-}
 
 .toolbar-spacer {
     flex: 1 1 auto;
@@ -48,7 +33,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       max-width: 600px;
   }
 
-
+:root {
+  --primary-color: #ff0000;
+}
 
 
 
@@ -57,7 +44,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;  
     overflow: hidden;
-    // color: white;
     text-align: center;
     line-height: normal;
     width: 95%;
@@ -76,16 +62,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .full-width-dialog .mat-dialog-container {
   width: 100vw !important;
   max-width: 400px !important;
-  border-top: 20px solid mat-color($HassPWA-primary);
+  border-top: 20px solid var(--primary-color);
   // height: 95vh !important;
 }
 
 .graph-dialog .mat-dialog-container {
   width: 90vw !important;
   height: 90vh !important;
-  border-top: 20px solid mat-color($HassPWA-primary);
+  border-top: 20px solid var(--primary-color);
   // height: 95vh !important;
 }
+
+
 
 input[type='text'],
 input[type='number'],
@@ -128,39 +116,25 @@ video {
   width: 100%;
 }
 
-.top-border  .mat-dialog-container {
-  border-top: 10px solid orange;
-}
 
 .dialog-setting {
   font-size: 125%;
 }
 
-// .mat-slider.mat-slider-horizontal .mat-slider-wrapper {
-//   top: 18px;
-// }
-// .mat-slider.mat-slider-horizontal .mat-slider-track-wrapper {
-//   height: 12px;
-//   border-radius: 10px
-// }
-// .mat-slider.mat-slider-horizontal .mat-slider-track-background,
-// .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
-//   height: 100%;
-// }
-// .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
-//   background-color: mat-color($HassPWA-accent);
-// }
-// .mat-accent .mat-slider-thumb {
-//   height: 30px;
-//   width: 30px;
-//   background-color: white;
-//   border: solid 2px gray;
-//   bottom: -20px;
-//   right: -20px;
-// }
-// .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
-//   background-color: white;
-// }
+.mat-slider-thumb-label {
+  transform: rotate(45deg) !important;
+  border-radius: 50% 50% 0 !important;
+}
+
+.mat-slider-thumb {
+  transform: scale(0) !important;
+}
+
+.mat-slider-thumb-label-text {
+  opacity: 1 !important;
+}
+
+
 
 .icon-tile > ::ng-deep figure {
   justify-content: flex-start !important;

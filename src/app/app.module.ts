@@ -37,6 +37,7 @@ import { ChartModal } from './modals/chartmodal';
 import { StackedChartModal } from './modals/stackedchartmodal';
 import { BinarySensorTileComponent } from './tiles/binary-sensor-tile/binary-sensor-tile.component';
 import { DeviceTrackerTileComponent } from './tiles/device-tracker-tile/device-tracker-tile.component';
+import {MaterialCssVarsModule} from 'angular-material-css-vars';
 
 import { CoverTileComponent } from './tiles/cover-tile/cover-tile.component';
 
@@ -132,6 +133,10 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatDividerModule,
     SwiperModule,
     LayoutModule,
+    MaterialCssVarsModule.forRoot({
+      // all optional
+      isAutoContrast: true,
+    }),
   ],
   entryComponents: [
     ListBottomSheet,

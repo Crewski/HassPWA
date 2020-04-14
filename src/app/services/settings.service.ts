@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import * as CryptoJS from 'crypto-js';
+import { MaterialCssVarsService } from 'angular-material-css-vars';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,8 @@ export class SettingsService {
 
 
   constructor(
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,    
+    private materialCssVarsService: MaterialCssVarsService
   ) {
     const encryptedSettings = localStorage.getItem(this.SETTING_NAME);
     var savedSettings = null;
@@ -41,6 +43,11 @@ export class SettingsService {
       if (savedSettings.rooms) this.settings.rooms = savedSettings.rooms;
       if (savedSettings.tiles) this.settings.tiles = savedSettings.tiles;
     }
+
+    this.materialCssVarsService.setPrimaryColor(this.settings.layout['primary_color'] || '#ff3d00');
+    this.materialCssVarsService.setAccentColor(this.settings.layout['accent_color'] || '#3f51b5');
+    document.documentElement.style.setProperty('--primary-color', this.settings.layout['primary_color'] || '#ff3d00');
+
     this.breakpointObserver.observe([
       '(orientation: portrait)',
     ]).subscribe(res => {
@@ -86,6 +93,19 @@ export class SettingsService {
 
   setTileColor(color: string) {
     this.settings.tiles["tile_color"] = color;
+    this.saveSettings();
+  }
+
+  setPrimaryColor(color: string){
+    this.materialCssVarsService.setPrimaryColor(color);
+    this.settings.layout["primary_color"] = color;
+    document.documentElement.style.setProperty('--primary-color', color);
+    this.saveSettings();
+  }
+
+  setAccentColor(color: string){
+    this.materialCssVarsService.setAccentColor(color);
+    this.settings.layout["accent_color"] = color;
     this.saveSettings();
   }
 

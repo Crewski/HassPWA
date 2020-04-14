@@ -28,7 +28,7 @@ export class ClimateTileComponent implements OnInit {
   @Input() entity_id: string;
   entity: any = {};
   active: boolean = false;
-  iconColor: string = 'rgb(0,0,0)';
+  iconColor: string = null;
   running: boolean = false
 
 
@@ -68,11 +68,11 @@ export class ClimateTileComponent implements OnInit {
     }
     if (this.entity.state.toLowerCase() != 'off'){
       this.active = true;
-      this.iconColor = this.entityService.standardOnColor;
+      // this.iconColor = this.entityService.standardOnColor;
 
     } else {
       this.active = false;
-      this.iconColor = this.entityService.standardOffColor
+      // this.iconColor = this.entityService.standardOffColor
     }
     // this.cd.detectChanges();
   }
@@ -127,7 +127,8 @@ export class ClimateTileComponent implements OnInit {
     } else if (this.entity.state.toLowerCase() == 'heat_cool' || this.entity.state.toLowerCase() == 'auto'){
       return 'rgb(0,255,0)'
     } else {
-      return this.entityService.standardOffColor;
+      // return this.entityService.standardOffColor;
+      return null;
     }
   }
 
@@ -167,6 +168,7 @@ export class ClimateDetailDialog implements OnInit, OnDestroy {
     private dialogRef: MatDialogRef<ClimateDetailDialog>,
     private bottomSheet: MatBottomSheet,
     private dialog: MatDialog,
+    private settings: SettingsService
   ) {
   }
 
@@ -218,12 +220,18 @@ export class ClimateDetailDialog implements OnInit, OnDestroy {
     }
   }
 
-  get getCurrentTemp(): number {
+  get getCurrentTemp(): string {
+    let currentTemp = '';
     if (!this.entity) return null;
     if (this.entity && this.entity.attributes){
-      if (this.entity.attributes.current_temperature) return this.entity.attributes.current_temperature;
+      if (this.entity.attributes.current_temperature) currentTemp =  this.entity.attributes.current_temperature;
     }
-    return null;
+    if (this.entity.attributes['unit_of_measurement']){
+      currentTemp = currentTemp + this.entity.attributes['unit_of_measurement'];
+    } else if (this.settings.getLayout['units'] && this.settings.getLayout['units']['temperature']){
+      currentTemp = currentTemp + this.settings.getLayout['units']['temperature']
+    } 
+    return currentTemp;
   }
 
   showList(type: string){

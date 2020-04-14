@@ -8,6 +8,8 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ListBottomSheet } from '../modals/listbottomsheet';
 import iro from '@jaames/iro';
 import { HttpService } from '../services/http.service';
+import { MaterialCssVarsService } from 'angular-material-css-vars';
+
 
 @Component({
   selector: 'app-settings',
@@ -28,7 +30,7 @@ export class SettingsComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private bottomSheet: MatBottomSheet,
-    private http: HttpService
+    private http: HttpService,
   ) { }
 
   ngOnInit(): void {
@@ -83,14 +85,21 @@ export class SettingsComponent implements OnInit {
     })
   }
 
-  openTileColor(){
+  openPrimaryColor(){    
     const dialogRef = this.dialog.open(TileColorDialog, {
-      data: this.getTileColor
+      data: this.settings.getLayout['primary_color'] || '#fff',
     })
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.settings.setTileColor(result);
-      }
+      if (result) this.settings.setPrimaryColor(result);      
+    });
+  }
+
+  openAccentColor(){    
+    const dialogRef = this.dialog.open(TileColorDialog, {
+      data: this.settings.getLayout['accent_color'] || '#fff',
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.settings.setAccentColor(result);      
     });
   }
 
@@ -192,7 +201,8 @@ export class TileColorDialog implements AfterViewInit {
     });
 
     colorPicker.on('input:end', (color) => {
-        this.dialogRef.close('rgb(' + [color.rgb.r, color.rgb.g, color.rgb.b].join(', ') + ')');
+        // this.dialogRef.close('rgb(' + [color.rgb.r, color.rgb.g, color.rgb.b].join(', ') + ')');
+        this.dialogRef.close(color.hexString);
       
     });
   }

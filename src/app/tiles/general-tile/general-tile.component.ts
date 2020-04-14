@@ -14,7 +14,7 @@ export class GeneralTileComponent implements OnInit {
   @Input() entity_id: string;
   entity: any = {};
   active: boolean = false;
-  iconColor: string;
+  iconColor: string = null;
   domain: string | null;
 
   waitingChange: boolean = false;
@@ -53,7 +53,7 @@ export class GeneralTileComponent implements OnInit {
         icon = "mdi:script-text";
         this.entity.state = 'Script';
         this.active = true;        
-        this.iconColor = this.entityService.standardOnColor;
+        // this.iconColor = this.entityService.standardOnColor;
         break;
       case "switch":
         icon = "mdi:toggle-switch";        
@@ -74,11 +74,11 @@ export class GeneralTileComponent implements OnInit {
   setActive() {
     if ((this.entity.state).toLowerCase() == 'on' || (this.entity.state).toLowerCase() == 'home') {
       this.active = true;
-      this.iconColor = this.entityService.standardOnColor;
+      // this.iconColor = this.entityService.standardOnColor;
 
     } else {
       this.active = false;
-      this.iconColor = this.entityService.standardOffColor;
+      // this.iconColor = this.entityService.standardOffColor;
     }
   }
 

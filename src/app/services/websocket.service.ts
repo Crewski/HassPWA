@@ -184,7 +184,6 @@ export class WebsocketService {
   }
 
   getConfig() {
-    // window.navigator.vibrate(150);
     let id = this.messageID;
     this.messageID++;
     let msg = { id: id, type: 'get_config' };

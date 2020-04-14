@@ -1,61 +1,71 @@
 <swiper [(index)]="index" [config]="config">
-<div class='app-container' *ngFor="let room of settings.getRooms; let i = index">
-<mat-toolbar color="accent" class='top-bar'>
-    <button mat-button *ngIf="settings.isEditing" (tap)="editRoomName(i)"><span style="font-size: 20px"
-        class="iconify" data-icon="mdi:edit"></span></button>
-    <span>{{ room.name }}</span>
-    <span class="toolbar-spacer"></span>
-    <button mat-button *ngIf="settings.isEditing" (tap)="settings.setEditing(false)"><span style="font-size: 20px"
-            class="iconify" data-icon="mdi:content-save"></span></button>
-    <button mat-button (tap)="gotoSettings()"  (press)="settings.setEditing(true)" style="align-content: center;"><span style="font-size: 20px;" class="iconify" data-icon="mdi:cog-outline"></span></button>
+    <div class='app-container' *ngFor="let room of settings.getRooms; let i = index">
+        <mat-toolbar color="accent" class='top-bar'>
+            <button mat-button *ngIf="settings.isEditing" (tap)="editRoomName(i)"><span style="font-size: 20px"
+                    class="iconify" data-icon="mdi:edit"></span></button>
+            <span>{{ room.name }}</span>
+            <span class="toolbar-spacer"></span>
+            <button mat-button *ngIf="settings.isEditing" (tap)="settings.setEditing(false)"><span
+                    style="font-size: 20px" class="iconify" data-icon="mdi:content-save"></span></button>
+            <button mat-button (tap)="gotoSettings()" (press)="settings.setEditing(true)"
+                style="align-content: center;"><span style="font-size: 20px;" class="iconify"
+                    data-icon="mdi:cog-outline"></span></button>
 
-</mat-toolbar>
+        </mat-toolbar>
 
-<div *ngIf="settings.isEditing">
-    <button  [style.visibility]="index != 0 ? 'visible' : 'hidden'" (tap)="moveRoom('left', i)" mat-button><span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-left-bold"></span></button>
-    <button (tap)="addRoom()" mat-button color="success"><span style="font-size: 40px;" class="iconify" data-icon="mdi:add"></span></button>
-    <button [style.visibility]="settings.getRooms.length != 1 ? 'visible' : 'hidden'" (tap)="deleteRoom(i)" mat-button color="warn"><span style="font-size: 40px;" class="iconify" data-icon="mdi:delete"></span></button>
-    <button [style.visibility]="index != settings.getRooms.length - 1 ? 'visible' : 'hidden'" (tap)="moveRoom('right', i)" mat-button><span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-right-bold"></span></button>
-    <button (tap)="addEntity(i)" mat-stroked-button color="accent">Add Entity</button>
-</div>
+        <div *ngIf="settings.isEditing">
+            <button [style.visibility]="index != 0 ? 'visible' : 'hidden'" (tap)="moveRoom('left', i)" mat-button><span
+                    style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-left-bold"></span></button>
+            <button (tap)="addRoom()" mat-button color="success"><span style="font-size: 40px;" class="iconify"
+                    data-icon="mdi:add"></span></button>
+            <button [style.visibility]="settings.getRooms.length != 1 ? 'visible' : 'hidden'" (tap)="deleteRoom(i)"
+                mat-button color="warn"><span style="font-size: 40px;" class="iconify"
+                    data-icon="mdi:delete"></span></button>
+            <button [style.visibility]="index != settings.getRooms.length - 1 ? 'visible' : 'hidden'"
+                (tap)="moveRoom('right', i)" mat-button><span style="font-size: 40px;" class="iconify"
+                    data-icon="mdi:arrow-right-bold"></span></button>
+            <button (tap)="addEntity(i)" mat-stroked-button color="accent">Add Entity</button>
+        </div>
 
-<div [style.font-size.vw]="settings.getFont" style="flex: 1 1; display: flex; flex-direction: column;" >
+        <div [style.font-size.vw]="settings.getFont" style="flex: 1 1; display: flex; flex-direction: column;">
             <mat-grid-list [cols]="settings.getCols">
-                <mat-grid-tile *ngFor="let tile of room.tiles; let j = index" [colspan]="getColSpan(tile)" [rowspan]="tile.split('.')[0] == 'camera' ? 2 : 1">
-                    <section *ngIf="(settings.isEditing)">                        
+                <mat-grid-tile *ngFor="let tile of room.tiles; let j = index" [colspan]="getColSpan(tile)"
+                    [rowspan]="tile.split('.')[0] == 'camera' ? 2 : 1">
+                    <section *ngIf="(settings.isEditing)">
                         <span class="delete-button"><button mat-icon-button (tap)="deleteEntity(i, j)">
-                            <span style="font-size: 40px;" class="iconify" data-icon="mdi:delete"></span>
-                        </button>
-                    </span>                        
-                        <span *ngIf="(j+1) != room.tiles.length" class="arrow-right"><button mat-icon-button (tap)="moveEntity(i, j, 'right')">
-                            <span style="font-size: 40px; color: blue" class="iconify" data-icon="mdi:arrow-right-bold"></span>
-                        </button>
-                    </span>
-                        <span *ngIf='j != 0' class="arrow-left"><button mat-icon-button (tap)="moveEntity(i, j, 'left')">
+                                <span style="font-size: 40px;" class="iconify" data-icon="mdi:delete"></span>
+                            </button>
+                        </span>
+                        <span *ngIf="(j+1) != room.tiles.length" class="arrow-right"><button mat-icon-button
+                                (tap)="moveEntity(i, j, 'right')">
+                                <span style="font-size: 40px; color: blue" class="iconify"
+                                    data-icon="mdi:arrow-right-bold"></span>
+                            </button>
+                        </span>
+                        <span *ngIf='j != 0' class="arrow-left"><button mat-icon-button
+                                (tap)="moveEntity(i, j, 'left')">
                                 <span style="font-size: 40px;" class="iconify" data-icon="mdi:arrow-left-bold"></span>
                             </button>
                         </span>
 
                     </section>
-                    <section [ngSwitch]="tile.split('.')[0]" style="width: 90%; height: 90%;" >
-                    <div *ngSwitchCase="'blank'"></div>
-                    <light-tile *ngSwitchCase="'light'" [entity_id]="tile"></light-tile>
-                    <camera-tile *ngSwitchCase="'camera'" [entity_id]="tile"></camera-tile>
-                    <climate-tile *ngSwitchCase="'climate'" [entity_id]="tile"></climate-tile>
-                    <sensor-tile *ngSwitchCase="'sensor'" [entity_id]="tile"></sensor-tile>
-                    <cover-tile *ngSwitchCase="'cover'" [entity_id]="tile"></cover-tile>
-                    <binary-sensor-tile *ngSwitchCase="'binary_sensor'" [entity_id]="tile"></binary-sensor-tile>
-                    <device-tracker-tile *ngSwitchCase="'person'" [entity_id]="tile"></device-tracker-tile>
-                    <device-tracker-tile *ngSwitchCase="'device_tracker'" [entity_id]="tile"></device-tracker-tile>
-                    <media-player-tile *ngSwitchCase="'media_player'" [entity_id]="tile"></media-player-tile>
-                    <input-number-tile *ngSwitchCase="'input_number'" [entity_id]="tile"></input-number-tile>
-                    <general-tile *ngSwitchDefault [entity_id]="tile"></general-tile>
-                </section>
+                    <section [ngSwitch]="tile.split('.')[0]" style="width: 90%; height: 90%;">
+                        <div *ngSwitchCase="'blank'"></div>
+                        <light-tile *ngSwitchCase="'light'" [entity_id]="tile"></light-tile>
+                        <camera-tile *ngSwitchCase="'camera'" [entity_id]="tile"></camera-tile>
+                        <climate-tile *ngSwitchCase="'climate'" [entity_id]="tile"></climate-tile>
+                        <sensor-tile *ngSwitchCase="'sensor'" [entity_id]="tile"></sensor-tile>
+                        <cover-tile *ngSwitchCase="'cover'" [entity_id]="tile"></cover-tile>
+                        <binary-sensor-tile *ngSwitchCase="'binary_sensor'" [entity_id]="tile"></binary-sensor-tile>
+                        <device-tracker-tile *ngSwitchCase="'person'" [entity_id]="tile"></device-tracker-tile>
+                        <device-tracker-tile *ngSwitchCase="'device_tracker'" [entity_id]="tile"></device-tracker-tile>
+                        <media-player-tile *ngSwitchCase="'media_player'" [entity_id]="tile"></media-player-tile>
+                        <input-number-tile *ngSwitchCase="'input_number'" [entity_id]="tile"></input-number-tile>
+                        <general-tile *ngSwitchDefault [entity_id]="tile"></general-tile>
+                    </section>
                 </mat-grid-tile>
-            </mat-grid-list>
-           
-     <!-- <div style="flex: 1 0; " (swipeleft)="swipe($event.type)" (swiperight)="swipe($event.type)"></div> -->
+            </mat-grid-list>    
 
-   </div>
-</div>
+        </div>
+    </div>
 </swiper>

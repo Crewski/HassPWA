@@ -39,9 +39,11 @@
     <h3>Tiles:</h3>
 
     <div >
-        <span >Active Tile Color:</span>
-        <button mat-flat-button style="color: white" [style.background-color]="getTileColor" (tap)="openTileColor()">Active Color 
-        </button>
+        <span >Primary Color:  </span>
+        <button mat-flat-button color="primary" (tap)="openPrimaryColor()">Primary Color</button>
+    </div>    <div >
+        <span >Accent Color:  </span>
+        <button mat-flat-button color="accent" (tap)="openAccentColor()">Accent Color</button>
     </div>
     <mat-checkbox [(ngModel)]="showCurrent" (change)="setClimateDisplay()" color="primary">Show Climate Current Temp
     </mat-checkbox>

@@ -13,7 +13,7 @@ export class DeviceTrackerTileComponent implements OnInit {
   @Input() entity_id: string;
   entity: any = {};
   active: boolean = true;
-  iconColor: string;
+  iconColor: string = null;
 
   waitingChange: boolean = false;
 
@@ -41,10 +41,10 @@ export class DeviceTrackerTileComponent implements OnInit {
   processEntity() {
     if (this.entity.state.toLowerCase() != 'home'){
       this.active = false;
-      this.iconColor = this.entityService.standardOffColor;
+      // this.iconColor = this.entityService.standardOffColor;
     } else {
       this.active = true;
-      this.iconColor = this.entityService.standardOnColor;
+      // this.iconColor = this.entityService.standardOnColor;
     }
     if (!this.entity || !this.entity.attributes ||  this.entity.attributes.icon) return;
     this.entity.attributes['icon'] = "mdi:account";
