@@ -48,6 +48,7 @@
                     <device-tracker-tile *ngSwitchCase="'person'" [entity_id]="tile"></device-tracker-tile>
                     <device-tracker-tile *ngSwitchCase="'device_tracker'" [entity_id]="tile"></device-tracker-tile>
                     <media-player-tile *ngSwitchCase="'media_player'" [entity_id]="tile"></media-player-tile>
+                    <input-number-tile *ngSwitchCase="'input_number'" [entity_id]="tile"></input-number-tile>
                     <general-tile *ngSwitchDefault [entity_id]="tile"></general-tile>
                 </section>
                 </mat-grid-tile>

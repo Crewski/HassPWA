@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { EntityService } from 'src/app/services/entity.service';
 import { SettingsService } from 'src/app/services/settings.service';
-import { MatDialog } from '@angular/material/dialog';
-import { StackedChartModal } from 'src/app/modals/stackedchartmodal';
 
 @Component({
   selector: 'media-player-tile',
@@ -18,7 +16,6 @@ export class MediaPlayerTileComponent implements OnInit {
   constructor(
     private entityService: EntityService,
     public settings: SettingsService,
-    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {

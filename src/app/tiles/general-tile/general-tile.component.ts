@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, } from '@angular/core';
 import { EntityService } from 'src/app/services/entity.service';
 import { WebsocketService } from 'src/app/services/websocket.service';
-import { MatBottomSheet, MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MatBottomSheet, } from '@angular/material/bottom-sheet';
 import { SettingsService } from 'src/app/services/settings.service';
 import { ListBottomSheet } from 'src/app/modals/listbottomsheet';
 

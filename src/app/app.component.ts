@@ -7,5 +7,8 @@ import { WebsocketService } from './services/websocket.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  title = 'HassPWA';
+
   constructor(private ws: WebsocketService){ this.ws.initConnection()}
 }

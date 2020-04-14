@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Inject } from '@angular/core';
 import { EntityService } from 'src/app/services/entity.service';
 import { WebsocketService, KeyValuePair } from 'src/app/services/websocket.service';
 import { HttpService } from 'src/app/services/http.service';

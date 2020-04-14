@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject,  } from 'rxjs';
 import { SettingsService } from './settings.service';
 import { EntityService } from './entity.service';
 import { MatSnackBar } from '@angular/material/snack-bar';

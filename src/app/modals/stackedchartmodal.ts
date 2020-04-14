@@ -1,4 +1,4 @@
-import { Component, Inject, ViewChild, ElementRef, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Inject, OnInit, } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import * as Chart from 'chart.js';
 import * as Hammer from 'hammerjs';

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, } from '@angular/core';
 import { EntityService } from 'src/app/services/entity.service';
 import { SettingsService } from 'src/app/services/settings.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,7 +12,7 @@ export class SensorTileComponent implements OnInit {
 
   @Input() entity_id: string;
   entity: any = {};
-  active: boolean = true;
+  active: boolean;
   iconColor: string;
 
   waitingChange: boolean = false;
@@ -24,7 +24,7 @@ export class SensorTileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.iconColor = this.entityService.standardOnColor;
+    
     this.entityService.entity_change.subscribe(data => {
       try {
         this.entity = data.find(x => x.entity_id == this.entity_id);
@@ -36,6 +36,13 @@ export class SensorTileComponent implements OnInit {
   }
 
   processEntity() {
+    if (this.entity.state.toLowerCase() == 'unavailable'){
+      this.active = false;
+      this.iconColor = this.entityService.standardOffColor;
+    } else {
+      this.active = true;
+      this.iconColor = this.entityService.standardOnColor;
+    }
     if (!this.entity || !this.entity.attributes || !this.entity.attributes.device_class || this.entity.attributes.icon) return;
     let icon = null
     switch (this.entity.attributes.device_class.toLowerCase()) {

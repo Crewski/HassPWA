@@ -1,13 +1,11 @@
-import { Component, OnInit, Input, ChangeDetectorRef, ViewEncapsulation, Inject, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Inject, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { EntityService } from 'src/app/services/entity.service';
 import { WebsocketService, KeyValuePair } from 'src/app/services/websocket.service';
-import { HttpService } from 'src/app/services/http.service';
 import { SettingsService } from 'src/app/services/settings.service';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import iro from '@jaames/iro';
 import { Subscription } from 'rxjs';
 import * as Hammer from 'hammerjs';
-import { HammerGestureConfig } from '@angular/platform-browser';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
@@ -27,7 +25,6 @@ export class LightTileComponent implements OnInit {
   constructor(
     private entityService: EntityService,
     private websocketService: WebsocketService,
-    private httpService: HttpService,
     public settings: SettingsService,
     private dialog: MatDialog
     // private cd: ChangeDetectorRef,

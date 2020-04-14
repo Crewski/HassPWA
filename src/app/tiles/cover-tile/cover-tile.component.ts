@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, } from '@angular/core';
 import { EntityService } from 'src/app/services/entity.service';
 import { SettingsService } from 'src/app/services/settings.service';
 import { MatDialog } from '@angular/material/dialog';

@@ -13,8 +13,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatInputModule} from '@angular/material/input';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatTabsModule, MAT_TABS_CONFIG} from '@angular/material/tabs';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -46,6 +45,7 @@ import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MediaPlayerTileComponent } from './tiles/media-player-tile/media-player-tile.component';
+import { InputNumberTileComponent, InputNumberDialog } from './tiles/input-number-tile/input-number-tile.component';
  
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -103,7 +103,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     BinarySensorTileComponent,
     DeviceTrackerTileComponent,
     MediaPlayerTileComponent,
-    TileColorDialog
+    TileColorDialog,
+    InputNumberTileComponent,
+    InputNumberDialog,
 
   ],
   imports: [
@@ -121,7 +123,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatSliderModule,
     MatInputModule,
     MatDialogModule,
-    MatTabsModule,
     MatAutocompleteModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
@@ -139,12 +140,12 @@ export class MyHammerConfig extends HammerGestureConfig {
     StackedChartModal,
 
   ],
-  providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig},
-    {
-      provide: SWIPER_CONFIG,
-      useValue: DEFAULT_SWIPER_CONFIG
-    },
-  { provide: MAT_TABS_CONFIG, useValue: { animationDuration: '150ms'}}],
+  providers: [
+    { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig},
+    { provide: SWIPER_CONFIG, useValue: DEFAULT_SWIPER_CONFIG },
+    { provide: MatDialogRef, useValue: {} },
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
