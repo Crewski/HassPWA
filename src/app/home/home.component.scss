@@ -30,27 +30,10 @@
 //     display: none;
 //   }
 
-.top-bar{
-    position: sticky;
-    position: -webkit-sticky; /* For macOS/iOS Safari */
-    top: 0; /* Sets the sticky toolbar to be on top */
-    z-index: 100;
-    flex: 0 0 auto;
-}
+
 
 div[hidden] {
     display: none;
   }
 
-.app-container {
-    display: flex;
-    flex-direction: column;    
-    width: 100vw;
-    height: 100vh;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;    
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color: white;
-    z-index: 1000;
-}
+
