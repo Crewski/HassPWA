@@ -106,7 +106,7 @@ export class SettingsService {
   }
   
   get getTileColor(): string {
-    return this.settings.tiles['tile_color'] || 'rgb(255, 255, 0)';
+    return this.settings.tiles['tile_color'] || 'rgb(255, 94, 19)';
   }
 
   getStateFont(state: any): number {
