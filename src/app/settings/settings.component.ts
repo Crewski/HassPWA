@@ -76,8 +76,7 @@ export class SettingsComponent implements OnInit {
 
   tryConnect() {
     this.settings.setUrl(this.url);
-    const locationURL = location.origin + location.pathname.replace("/settings", "");
-    let ha_url = 'https://' + this.url + '/auth/authorize?client_id=' + locationURL + '&redirect_uri=' + locationURL + '/home';
+    let ha_url = 'https://' + this.url + '/auth/authorize?client_id=' + environment.app_url + '&redirect_uri=' + environment.app_url + '/home';
     let popup = window.open(ha_url, "authWindow");
     window.addEventListener('message', (code) => {
       window.removeEventListener('message', null)
