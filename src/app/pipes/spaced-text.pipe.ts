@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SpacedTextPipe implements PipeTransform {
 
   transform(value: string): string {
-    return value ? value.replace('_', ' ') : value;
+    return value ? value.replace(/_/g, ' ') : value;
   }
 
 }

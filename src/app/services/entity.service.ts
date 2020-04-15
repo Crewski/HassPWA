@@ -15,7 +15,15 @@ export class EntityService {
   constructor() { }
 
   setEntities(entities){
+    entities.forEach(entity => {
+      if(entity.attributes && !entity.attributes.friendly_name){
+        let name = entity.entity_id.split('.')[1];
+        name = name.replace(/_/g, ' ');
+        entity.attributes.friendly_name = name
+      }
+    });
     this.entities = entities;
+
     this.entity_subject.next(entities);
   }
 
@@ -23,6 +31,11 @@ export class EntityService {
     try {      
       let index = this.entities.findIndex(entity => entity.entity_id == message.entity_id);
       if (message) {
+        if(message.attributes && !message.attributes.friendly_name){
+          let name = message.entity_id.split('.')[1];
+          name = name.replace(/_/g, ' ');
+          message.attributes.friendly_name = name
+        }
         this.entities[index] = message;
       }
       this.entity_subject.next(this.entities);

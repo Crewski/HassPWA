@@ -27,19 +27,30 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 
   .settings-area{
-      margin: 10px;
-      display: flex;
-      flex-direction: column;
+      margin: 10px auto;
+      display: inherit;
+      flex-direction: inherit;
       max-width: 600px;
+      width: 90%;
   }
 
 :root {
   --primary-color: #ff0000;
 }
 
+.bg-500 {
+  @include mat-css-color-and-contrast-primary(500);
+  width: 100%;
+}
+
+.bga-500 {
+  @include mat-css-color-and-contrast-accent(500);
+  width: 100%;
+}
+
 .app-container {
   display: flex;
-  flex-direction: column;    
+  flex-direction: column;  
   width: 100vw;
   height: 100vh;
   overflow-y: scroll;

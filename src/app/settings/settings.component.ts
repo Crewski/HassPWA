@@ -45,31 +45,31 @@ export class SettingsComponent implements OnInit {
     this.settings.setCols(this.cols);
   }
 
-  setColsLand(){
+  setColsLand() {
     this.settings.setColsLand(this.colsLand);
   }
 
-  get getEffect(){
+  get getEffect() {
     return this.settings.getLayout['effect'] || 'slide';
   }
 
-  get getTileColor(){
+  get getTileColor() {
     return this.settings.getTileColor;
   }
 
-  setEffect(){
+  setEffect() {
     const options = ["slide", "fade", "coverflow", "flip"]
     const bottomSheetRef = this.bottomSheet.open(ListBottomSheet, {
       data: { options: options },
     });
     bottomSheetRef.afterDismissed().subscribe((option) => {
-      if(option){
+      if (option) {
         this.settings.setSwiperEffect(option);
       }
     });
   }
 
-  setClimateDisplay(){
+  setClimateDisplay() {
     this.settings.setClimateDisplay(this.showCurrent);
   }
 
@@ -85,21 +85,31 @@ export class SettingsComponent implements OnInit {
     })
   }
 
-  openPrimaryColor(){    
+  openPrimaryColor() {
+    const oldColor = this.settings.getLayout['primary_color'] || '#fff';
     const dialogRef = this.dialog.open(TileColorDialog, {
-      data: this.settings.getLayout['primary_color'] || '#fff',
+      data: { color: oldColor, type: 'primary' },
     })
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) this.settings.setPrimaryColor(result);      
+    dialogRef.afterClosed().subscribe(newColor => {
+      if (newColor) {
+        this.settings.setPrimaryColor(newColor);
+      } else {
+        this.settings.setPrimaryColor(oldColor)
+      }
     });
   }
 
-  openAccentColor(){    
+  openAccentColor() {
+    const oldColor = this.settings.getLayout['accent_color'] || '#fff';
     const dialogRef = this.dialog.open(TileColorDialog, {
-      data: this.settings.getLayout['accent_color'] || '#fff',
+      data: { color: oldColor, type: 'accent' },
     })
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) this.settings.setAccentColor(result);      
+    dialogRef.afterClosed().subscribe(newColor => {
+      if (newColor) {
+        this.settings.setAccentColor(newColor);
+      } else {
+        this.settings.setAccentColor(oldColor)
+      }
     });
   }
 
@@ -172,24 +182,30 @@ export class SettingsDialog {
 }
 
 @Component({
-  
+
   template: `
-  <div style="width: 250px; height: 250px"><div  id="pickerColor"></div></div>
+  <div style="width: 250px; height: 300px">
+  <button (tap)="setColor()" mat-flat-button [ngClass]="{'bg-500': data.type == 'primary', 'bga-500': data.type == 'accent'}">Press to set color</button>
+    <div style="margin-top: 14px;" id="pickerColor"></div>
+  </div>
   `,
 })
 export class TileColorDialog implements AfterViewInit {
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public color: string,
-    private dialogRef: MatDialogRef<TileColorDialog>
-  ){}
+  selectedColor: string = this.data.color;
 
-  ngAfterViewInit(){
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<TileColorDialog>,
+    private materialCssVarsService: MaterialCssVarsService,
+  ) { }
+
+  ngAfterViewInit() {
     const colorPicker = new iro.ColorPicker("#pickerColor", {
       // Set the size of the color picker
       width: 250,
       height: 250,
-      color: this.color,
+      color: this.data.color,
       layout: [
         {
           component: iro.ui.Wheel,
@@ -200,11 +216,23 @@ export class TileColorDialog implements AfterViewInit {
       ],
     });
 
-    colorPicker.on('input:end', (color) => {
-        // this.dialogRef.close('rgb(' + [color.rgb.r, color.rgb.g, color.rgb.b].join(', ') + ')');
-        this.dialogRef.close(color.hexString);
-      
+    // colorPicker.on('input:end', (color) => {
+    //     // this.dialogRef.close('rgb(' + [color.rgb.r, color.rgb.g, color.rgb.b].join(', ') + ')');
+    //     this.dialogRef.close(color.hexString);
+
+    // });
+    colorPicker.on('input:change', (color) => {
+      this.selectedColor = color.hexString;
+      if (this.data.type == 'primary') {
+        this.materialCssVarsService.setPrimaryColor(color.hexString);
+      } else if (this.data.type == 'accent') {
+        this.materialCssVarsService.setAccentColor(color.hexString);
+      }
     });
+  }
+
+  setColor(){
+    this.dialogRef.close(this.selectedColor);
   }
 
 }

@@ -2,7 +2,7 @@
   <h1 mat-dialog-title>{{ getFriendlyName }}</h1>
   <div>
     <button class="detail-toggle" mat-flat-button color='primary' *ngIf="isOn" (tap)="toggleLight()">Turn Off</button>
-    <button class="detail-toggle" mat-stroked-button color='primary' *ngIf="!isOn" (tap)="toggleLight()">Turn On</button>
+    <button class="detail-toggle" mat-raised-button color='primary' *ngIf="!isOn" (tap)="toggleLight()">Turn On</button>
     <div *ngIf="entity.attributes.brightness">
       <span>Brightness: </span>
       <mat-slider max="100" min="0" step="1" thumbLabel="true" [(ngModel)]="adjustedBrightness"

@@ -33,22 +33,22 @@
     <tr class="dialog-setting">
       <td>HVAC Mode: </td>
       <td>
-      <button style="font-size: inherit; width: 100%;" mat-stroked-button color="primary"
+      <button style="font-size: inherit; width: 100%;" mat-raised-button color="primary"
         (tap)="showList('hvac')">{{ this.entity.state | spacedText | titlecase  }}</button></td>
     </tr>
     <tr class="dialog-setting" *ngIf="this.entity.attributes.preset_mode">
       <td>Preset Mode: </td>
       <td>
-      <button style="font-size: inherit; width: 100%;" mat-stroked-button color="primary"
+      <button style="font-size: inherit; width: 100%;" mat-raised-button color="primary"
         (tap)="showList('preset')">{{ this.entity.attributes.preset_mode | spacedText | titlecase  }}</button></td>
     </tr>
     <tr class="dialog-setting" *ngIf="this.entity.attributes.fan_mode">
       <td>Fan Mode: </td>
       <td>
-      <button style="font-size: inherit; width: 100%;" mat-stroked-button color="primary"
+      <button style="font-size: inherit; width: 100%;" mat-raised-button color="primary"
         (tap)="showList('fan')">{{ this.entity.attributes.fan_mode | spacedText | titlecase  }}</button></td>
     </tr>
   </table>
-    <button style="font-size: inherit; width: 100%;" mat-stroked-button color="accent"
+    <button style="font-size: inherit; width: 100%;" mat-raised-button color="accent"
         (tap)="showHistory()">History Graph</button>
 

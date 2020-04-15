@@ -152,14 +152,21 @@ export class AddEntityDialog implements OnInit {
 
   ngOnInit() {
     this.entities = this.entityService.getAllEntities();
-    this.entities.sort((a,b) => {
-      try {
-      let aName = a.attributes.friendly_name ? a.attributes.friendly_name : a.entity_id.split['.'][1];
-      let bName = b.attributes.friendly_name ? b.attributes.friendly_name : b.entity_id.split['.'][1];
+    this.entities.sort((a,b) => { 
+      if (a.attributes.friendly_name.toLowerCase() > b.attributes.friendly_name.toLowerCase()){
+        return 1;
+      } else if (a.attributes.friendly_name.toLowerCase() < b.attributes.friendly_name.toLowerCase()){
+        return -1;
+      } else {
+        return 0;
+      }
+      // try {
+      // let aName = a.attributes.friendly_name ? a.attributes.friendly_name : a.entity_id.split['.'][1];
+      // let bName = b.attributes.friendly_name ? b.attributes.friendly_name : b.entity_id.split['.'][1];
       
-        if (aName > bName) return 1;
-        if (aName < bName) return -1;
-      } catch (e) { return -1;}
+      //   if (aName > bName) return 1;
+      //   if (aName < bName) return -1;
+      // } catch (e) { return -1;}
     })
     this.entities.unshift({entity_id: 'blank.blank', attributes: {friendly_name: 'Blank Tile'}});
     this.filteredEntities = this.myControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)))

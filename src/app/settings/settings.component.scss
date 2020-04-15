@@ -1,5 +1,7 @@
 .settings-item{
     display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 mat-divider {
