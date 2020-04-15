@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       if (params['code']) {        
-        window.opener.postMessage(params['code'], location.origin + '/settings');
+        window.opener.postMessage(params['code'], location.origin + location.pathname.replace("/home", "") + '/settings');
       }
     });
     this.config = {

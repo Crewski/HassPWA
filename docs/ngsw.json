@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1586968268643,
+  "timestamp": 1586969503538,
   "index": "/HassPWA/index.html",
   "assetGroups": [
     {
@@ -10,8 +10,8 @@
       "urls": [
         "/HassPWA/favicon.ico",
         "/HassPWA/index.html",
-        "/HassPWA/main-es2015.0674c251d658f5f3072a.js",
-        "/HassPWA/main-es5.0674c251d658f5f3072a.js",
+        "/HassPWA/main-es2015.dc8cf52a01b40c95aea3.js",
+        "/HassPWA/main-es5.dc8cf52a01b40c95aea3.js",
         "/HassPWA/manifest.webmanifest",
         "/HassPWA/polyfills-es2015.8b954393b3b10ce4b65a.js",
         "/HassPWA/polyfills-es5.35ce51e1b550bcf6a8d7.js",
@@ -54,9 +54,9 @@
     "/HassPWA/assets/icons/icon-72x72.png": "435edcdc97ad1ea25116db8abc88dd794207ae4c",
     "/HassPWA/assets/icons/icon-96x96.png": "0cf6391525446312877cefca31cf36a816715fa8",
     "/HassPWA/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/HassPWA/index.html": "9af2b8953a2023a403a2795567a0168f8ddb006e",
-    "/HassPWA/main-es2015.0674c251d658f5f3072a.js": "819b34299f7d126727c1526fc02a23a249cc06f3",
-    "/HassPWA/main-es5.0674c251d658f5f3072a.js": "6e3fb0983043f99f63e148183cad60f52fc42f02",
+    "/HassPWA/index.html": "cd98572522cc347668e399859cc95df26e59c498",
+    "/HassPWA/main-es2015.dc8cf52a01b40c95aea3.js": "944e3401ef48e0aac950b25fe5d1f836699f4652",
+    "/HassPWA/main-es5.dc8cf52a01b40c95aea3.js": "604f00a9b49f1fb06cdace60e97c3e694ff5cca8",
     "/HassPWA/manifest.webmanifest": "fe2da72270c7299feba767c552f32097a67a2cf6",
     "/HassPWA/polyfills-es2015.8b954393b3b10ce4b65a.js": "c0a90ad18c5d78e88361db1364ac8564b1ceea89",
     "/HassPWA/polyfills-es5.35ce51e1b550bcf6a8d7.js": "af35df77afbe88e6469482a5394afc5a691df322",
