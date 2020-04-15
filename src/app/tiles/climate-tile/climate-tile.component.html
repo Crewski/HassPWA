@@ -6,7 +6,6 @@
     </button>
     
     <ng-template #tile>
-        <!-- <div *ngIf='waitingChange' class="action-spinner"><mat-spinner color='primary'></mat-spinner></div>     -->
         <mat-grid-list cols='1' rowHeight="5:1"  [style.opacity]="entity?.state == 'unavailable' ? 0.3 : 1">
             <mat-grid-tile [@showhide]="running" [style.color]='getIconColor'>
                 <span *ngIf='entity?.attributes' style="border-radius: 100%; height: 100%; width: 20%;" [style.background-color]="getBackgroundColor" class="iconify"

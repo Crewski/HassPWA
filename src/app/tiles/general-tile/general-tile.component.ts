@@ -17,8 +17,6 @@ export class GeneralTileComponent implements OnInit {
   iconColor: string = null;
   domain: string | null;
 
-  waitingChange: boolean = false;
-
   constructor(
     private entityService: EntityService,
     private websocketService: WebsocketService,
@@ -67,8 +65,6 @@ export class GeneralTileComponent implements OnInit {
     if (!this.entity.attributes['icon']) {
       this.entity.attributes['icon'] = icon;
     }
-    this.waitingChange = false;
-    // this.cd.detectChanges();
   }
 
   setActive() {
@@ -83,7 +79,6 @@ export class GeneralTileComponent implements OnInit {
   }
 
   onTap() {
-    this.waitingChange = true;
     let action = '';
     switch (this.domain){
       case "script":
@@ -106,7 +101,6 @@ export class GeneralTileComponent implements OnInit {
       if(option){
         this.websocketService.callService('input_select', 'select_option', this.entity_id, [{key: 'option', value: option}] )
       } else {
-        this.waitingChange = false;
       }
     });
   }

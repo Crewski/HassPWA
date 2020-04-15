@@ -19,9 +19,6 @@ export class LightTileComponent implements OnInit {
   active: boolean = false;
   iconColor: string = null;
 
-
-  waitingChange: boolean = false;
-
   constructor(
     private entityService: EntityService,
     private websocketService: WebsocketService,
@@ -46,8 +43,6 @@ export class LightTileComponent implements OnInit {
       this.entity.attributes['icon'] = "mdi:lightbulb";
     }
     this.setActive();
-    this.waitingChange = false;
-    // this.cd.detectChanges();
   }
 
   setActive() {
@@ -56,16 +51,15 @@ export class LightTileComponent implements OnInit {
       if (this.entity.attributes['rgb_color']) {
         this.iconColor = 'rgb(' + this.entity.attributes['rgb_color'].join(', ') + ')';
       } else {
-        // this.iconColor = this.entityService.standardOnColor;
+        this.iconColor = null
       }
     } else {
       this.active = false;
-      // this.iconColor = this.entityService.standardOffColor;
+      this.iconColor = null;
     }
   }
 
   onTap() {
-    this.waitingChange = true;
     this.websocketService.callService("light", "toggle", this.entity_id);
   }
 
@@ -184,7 +178,11 @@ export class LightDetailDialog implements OnInit, OnDestroy, AfterViewInit {
 
   updateEntity() {
     let options: KeyValuePair[] = [];
-    if (this.adjustedBrightness != null) options.push({ key: 'brightness', value: (this.adjustedBrightness / 100 * 255) });
+    if (this.adjustedBrightness != null) {
+      let brightness = this.adjustedBrightness / 100 * 255;
+      if (brightness == 0) brightness = 1;
+      options.push({ key: 'brightness', value: brightness });
+    }
     if (this.adjustedWhiteValue != null) options.push({ key: 'white_value', value: (this.adjustedWhiteValue / 100 * 255) });
     this.websocketService.callService('light', 'turn_on', this.entity_id, options);
   }

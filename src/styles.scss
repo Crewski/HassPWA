@@ -38,6 +38,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --primary-color: #ff0000;
 }
 
+.slider-padding {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+}
+
+.slider-padding .value_header {
+  width: 90px;
+}
+
+.slider-padding .mat-slider {
+  width: 100%;
+  flex: 1 1;
+}
+
 .bg-500 {
   @include mat-css-color-and-contrast-primary(500);
   width: 100%;
@@ -83,13 +100,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-size: inherit;
 }
 
-.action-spinner {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 1;    
-}
+
 
 .full-width-dialog .mat-dialog-container {
   width: 100vw !important;
@@ -131,7 +142,6 @@ input {
   border-radius: .75em;
   bottom: 0px;
   height: 1.5em;
-  // text-align: center;
   display: flex;
   align-items: center;
   color: white;

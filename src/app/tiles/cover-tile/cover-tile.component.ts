@@ -18,8 +18,6 @@ export class CoverTileComponent implements OnInit {
   iconOn: string;
   iconOff: string;
 
-  waitingChange: boolean = false;
-
   constructor(
     private entityService: EntityService,
     public settings: SettingsService,

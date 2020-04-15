@@ -15,8 +15,6 @@ export class SensorTileComponent implements OnInit {
   active: boolean;
   iconColor: string = null;
 
-  waitingChange: boolean = false;
-
   constructor(
     private entityService: EntityService,
     public settings: SettingsService,

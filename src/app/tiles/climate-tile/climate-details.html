@@ -9,7 +9,7 @@
     <tr *ngIf="entity.attributes.temperature" class='dialog-setting'>
       <td style="width: 50%">Target:</td>
       <td style="width: 50%">
-        <mat-slider style="width: 100%" [max]="getMax" [min]="getMin" [step]="getStep" thumbLabel="true"
+        <mat-slider style="width: 100%;" style="width: 100%" [max]="getMax" [min]="getMin" [step]="getStep" thumbLabel="true"
           [(ngModel)]="entity.attributes.temperature" (change)="updateEntity('temp')">
         </mat-slider>
       </td>
@@ -17,7 +17,7 @@
     <tr *ngIf="entity.attributes.target_temp_low" class='dialog-setting'>
       <td>Target Min:</td>
       <td>
-        <mat-slider [max]="getMax" [min]="getMin" [step]="getStep" thumbLabel="true"
+        <mat-slider style="width: 100%;" [max]="getMax" [min]="getMin" [step]="getStep" thumbLabel="true"
           [(ngModel)]="entity.attributes.target_temp_low" (change)="updateEntity('low')">
         </mat-slider>
       </td>
@@ -25,7 +25,7 @@
     <tr *ngIf="entity.attributes.target_temp_high" class='dialog-setting'>
       <td>Target Max:</td>
       <td>
-        <mat-slider [max]="getMax" [min]="getMin" [step]="getStep" thumbLabel="true"
+        <mat-slider style="width: 100%;" [max]="getMax" [min]="getMin" [step]="getStep" thumbLabel="true"
           [(ngModel)]="entity.attributes.target_temp_high" (change)="updateEntity('high')">
         </mat-slider>
       </td>

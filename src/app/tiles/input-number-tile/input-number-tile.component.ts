@@ -15,8 +15,6 @@ export class InputNumberTileComponent implements OnInit {
   active: boolean = true;
   iconColor: string = null;
 
-  waitingChange: boolean = false;
-
   constructor(
     private entityService: EntityService,
     public settings: SettingsService,
