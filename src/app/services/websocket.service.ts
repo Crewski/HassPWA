@@ -34,7 +34,7 @@ export class WebsocketService {
     if (!this.settings.getConnection['token'] && !token) {
       return;
     }
-    let mainsub = this.isConnected.subscribe(connected => {
+    this.isConnected.subscribe(connected => {
 
       if (!connected) {
         this.haWebSocket = new WebSocketSubject('wss://' + this.settings.getConnection['url'] + '/api/websocket');
@@ -90,7 +90,7 @@ export class WebsocketService {
   getLongLivedToken() {
     let id = this.messageID;
     this.messageID++;
-    let msg = { id: id, type: "auth/long_lived_access_token", client_name: 'HassPWA' + Math.floor(Math.random() * 99999 + 1), client_icon: '', lifespan: 365 };
+    let msg = { id: id, type: "auth/long_lived_access_token", client_name: 'HassPWA_' + Math.floor(Math.random() * 99999 + 1), client_icon: '', lifespan: 365 };
     this.haWebSocket.next(msg);
     let sub = this.message_change.subscribe(message => {
       if (message.id == id) {

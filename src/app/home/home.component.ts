@@ -31,12 +31,6 @@ export class HomeComponent implements OnInit {
     private dialog: MatDialog,
   ) { }
 
-  onPress() {
-    console.log("Press");
-  }
-
-
-
   getColSpan(entity_id: string) {
     let domain = entity_id.split('.')[0];
     switch (domain) {
@@ -50,7 +44,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       if (params['code']) {        
-        window.opener.postMessage(params['code'], environment.app_url + '/settings');
+        window.opener.postMessage(params['code'], location.origin + '/settings');
       }
     });
     this.config = {
