@@ -31,7 +31,14 @@ export class StackedChartModal implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: StackedChartModalData,
         private dialogRef: MatDialogRef<StackedChartModal>,
         private http: HttpService
-    ) { }
+    ) { 
+        dialogRef.disableClose = true;
+        setTimeout(() => {
+          dialogRef.backdropClick().subscribe(() => {
+            dialogRef.close(null);
+          })
+        }, 50)
+    }
 
     ngOnInit() {
         this.labels.push(this.data.off_value);

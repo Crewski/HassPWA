@@ -90,6 +90,12 @@ export class CameraStreamDialog implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<CameraStreamDialog>) {
+      dialogRef.disableClose = true;
+      setTimeout(() => {
+        dialogRef.backdropClick().subscribe(() => {
+          dialogRef.close(null);
+        })
+      }, 50)
   }
 
   close() {

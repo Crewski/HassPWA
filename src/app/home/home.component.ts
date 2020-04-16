@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      if (params['code']) {        
+      if (params['code']) {
         window.opener.postMessage(params['code'], environment.app_url + '/settings');
       }
     });
@@ -104,7 +104,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  gotoSettings(){
+  gotoSettings() {
     this.router.navigate(['/settings']);
   }
 
@@ -142,14 +142,21 @@ export class AddEntityDialog implements OnInit {
   entities: any[];
   filteredEntities: Observable<any[]>;
 
-  constructor(private entityService: EntityService, private dialogRef: MatDialogRef<AddEntityDialog>) { }
+  constructor(private entityService: EntityService, private dialogRef: MatDialogRef<AddEntityDialog>) {
+    dialogRef.disableClose = true;
+    setTimeout(() => {
+      dialogRef.backdropClick().subscribe(() => {
+        dialogRef.close(null);
+      })
+    }, 50)
+  }
 
   ngOnInit() {
     this.entities = this.entityService.getAllEntities();
-    this.entities.sort((a,b) => { 
-      if (a.attributes.friendly_name.toLowerCase() > b.attributes.friendly_name.toLowerCase()){
+    this.entities.sort((a, b) => {
+      if (a.attributes.friendly_name.toLowerCase() > b.attributes.friendly_name.toLowerCase()) {
         return 1;
-      } else if (a.attributes.friendly_name.toLowerCase() < b.attributes.friendly_name.toLowerCase()){
+      } else if (a.attributes.friendly_name.toLowerCase() < b.attributes.friendly_name.toLowerCase()) {
         return -1;
       } else {
         return 0;
@@ -157,25 +164,25 @@ export class AddEntityDialog implements OnInit {
       // try {
       // let aName = a.attributes.friendly_name ? a.attributes.friendly_name : a.entity_id.split['.'][1];
       // let bName = b.attributes.friendly_name ? b.attributes.friendly_name : b.entity_id.split['.'][1];
-      
+
       //   if (aName > bName) return 1;
       //   if (aName < bName) return -1;
       // } catch (e) { return -1;}
     })
-    this.entities.unshift({entity_id: 'blank.blank', attributes: {friendly_name: 'Blank Tile'}});
+    this.entities.unshift({ entity_id: 'blank.blank', attributes: { friendly_name: 'Blank Tile' } });
     this.filteredEntities = this.myControl.valueChanges.pipe(startWith(''), map(value => this._filter(value)))
   }
 
   private _filter(value: string): any[] {
     const filterValue = value.toLocaleLowerCase();
     return this.entities.filter(entity => {
-      if (entity.attributes.friendly_name){
+      if (entity.attributes.friendly_name) {
         return entity.entity_id.toLocaleLowerCase().includes(filterValue) || entity.attributes.friendly_name.toLowerCase().includes(filterValue);
-    
+
       } else {
         return entity.entity_id.toLocaleLowerCase().includes(filterValue);
       }
-      }
+    }
     );
   }
 
@@ -201,7 +208,14 @@ export class AddEntityDialog implements OnInit {
 })
 export class EditRoomNameDialog {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: string) { console.log(this.data) }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: string, private dialogRef: MatDialogRef<EditRoomNameDialog>) { 
+    dialogRef.disableClose = true;
+    setTimeout(() => {
+      dialogRef.backdropClick().subscribe(() => {
+        dialogRef.close(null);
+      })
+    }, 50)
+  }
 
 
 }

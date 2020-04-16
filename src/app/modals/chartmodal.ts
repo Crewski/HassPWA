@@ -29,10 +29,17 @@ export class ChartModal implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: ChartModalData,
         private dialogRef: MatDialogRef<ChartModal>,
         private http: HttpService
-    ) { }
+    ) { 
+        dialogRef.disableClose = true;
+        setTimeout(() => {
+          dialogRef.backdropClick().subscribe(() => {
+            dialogRef.close(null);
+          })
+        }, 50)
+    }
 
     ngOnInit() {
-
+        
         let hammertime = new Hammer(document.getElementById('dialog-cont'));
         hammertime.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
         hammertime.on('swipe', ev => {

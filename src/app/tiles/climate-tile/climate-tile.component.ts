@@ -170,6 +170,12 @@ export class ClimateDetailDialog implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private settings: SettingsService
   ) {
+    dialogRef.disableClose = true;
+    setTimeout(() => {
+      dialogRef.backdropClick().subscribe(() => {
+        dialogRef.close(null);
+      })
+    }, 50)
   }
 
   ngOnInit() { 

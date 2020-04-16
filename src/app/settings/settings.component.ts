@@ -41,6 +41,10 @@ export class SettingsComponent implements OnInit {
     this.showCurrent = this.settings.getTiles['show_current'];
   }
 
+  gotoHome(): void {
+    this.router.navigate(['/home']);
+  }
+
   setCols() {
     this.settings.setCols(this.cols);
   }
@@ -75,6 +79,24 @@ export class SettingsComponent implements OnInit {
 
 
   tryConnect() {
+    if (window.matchMedia('(display-mode: standalone)').matches) {  
+      // do things here  
+      // set a variable to be used when calling something  
+      // e.g. call Google Analytics to track standalone use  
+      window.alert("Thank you for installing HassPWA") ;
+  } else {
+    window.alert("You haven't installed HassPWA yet.  Any configuration made here WILL NOT carry over to the installed version");
+  }
+  const dialogRef = this.dialog.open(SettingsDialog, {
+    data: {
+      title: "Home Assistant URL",
+      message: "You are about to connect to " + ("https://" + this.url).bold() + ".  Is this correct?",
+      yes: "Yes, connect",
+      no: "No, cancel"
+     },
+  })
+  dialogRef.afterClosed().subscribe(res => {
+    if(res){
     this.settings.setUrl(this.url);
     let ha_url = 'https://' + this.url + '/auth/authorize?client_id=' + environment.app_url + '&redirect_uri=' + environment.app_url + '/home';
     let popup = window.open(ha_url, "authWindow");
@@ -83,6 +105,8 @@ export class SettingsComponent implements OnInit {
       popup.close();
       this.http.getAuthToken(code.data);
     })
+    }
+  });
   }
 
   openPrimaryColor() {
@@ -114,15 +138,15 @@ export class SettingsComponent implements OnInit {
   }
 
   resetRooms() {
-    const dialogRef = this.dialog.open(SettingsDialog, {
-      width: '250px',
-    });
+    // const dialogRef = this.dialog.open(SettingsDialog, {
+    //   width: '250px',
+    // });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.settings.resetRooms();
-      }
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     this.settings.resetRooms();
+    //   }
+    // });
   }
 
   editRooms() {
@@ -167,18 +191,19 @@ export class SettingsComponent implements OnInit {
 @Component({
   selector: 'app-settings',
   template: `
-  <h1 mat-dialog-title>Reset Rooms</h1>
+  <h1 mat-dialog-title>{{data.title}}</h1>
     <div mat-dialog-content>
-    <p>Are you sure you want to reset rooms?  This can not be undone.</p>
+    <p [innerHTML]=data.message></p>
 </div>
 <div mat-dialog-actions>
-  <button mat-button color="primary" [mat-dialog-close]="false">Cancel</button>
-  <button mat-button color="warn" [mat-dialog-close]="true" cdkFocusInitial>Reset Rooms</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="false">{{data.no}}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>{{data.yes}}</button>
 </div>
   `,
 })
 export class SettingsDialog {
-
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,){}
 }
 
 @Component({

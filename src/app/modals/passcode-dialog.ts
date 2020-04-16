@@ -33,6 +33,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
         @Inject(MAT_DIALOG_DATA) public data: string
     ){
         if (this.data) this.title = this.data;
+        dialogRef.disableClose = true;
+        setTimeout(() => {
+          dialogRef.backdropClick().subscribe(() => {
+            dialogRef.close(null);
+          })
+        }, 50)
     }
 
     onClick(button: any){
